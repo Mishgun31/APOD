@@ -16,6 +16,9 @@ class PictureListViewController: UITableViewController {
         super.viewDidLoad()
         getData(with: .defaultRequest)
         getData(with: .randomObjectsRequest(numberOfObjects: 10))
+        
+        tableView.estimatedRowHeight = 300
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     // MARK: - Table view data source
@@ -47,14 +50,20 @@ class PictureListViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "Test Header"
+    }
+    
     private func getData(with requestType: RequestType) {
         Networker.shared.fetchData(with: requestType) { result in
             switch result {
             case .success(let astronomyPictureObject):
                 if let astronomyPicture = astronomyPictureObject as? AstronomyPicture {
                     self.todayPicture = astronomyPicture
+                    print("111")
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
                     self.pictures = astronomyPictures
+                    print("222")
                 }
                 self.tableView.reloadData()
             case .failure(let error):

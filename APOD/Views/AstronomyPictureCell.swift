@@ -14,11 +14,27 @@ class AstronomyPictureCell: UITableViewCell {
     
     @IBOutlet weak var astronomyImage: UIImageView!
     
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    
     func configure(with data: AstronomyPicture?) {
         dateLabel.text = data?.date
         titleLabel.text = data?.title
-        Networker.shared.fetchImage(with: data?.url ?? "") { imageData in
-            self.astronomyImage.image = UIImage(data: imageData)
+        
+        setImageHeightConstarint(with: UIImage(named: "SwiftImage"))
+        astronomyImage.image = UIImage(named: "SwiftImage")
+        
+        CacheManager.shared.getImage(with: data?.url ?? "") { image in
+            self.setImageHeightConstarint(with: image)
+            self.astronomyImage.image = image
+            self.layoutIfNeeded()
+        }
+    }
+    
+    private func setImageHeightConstarint(with image: UIImage?) {
+        if let image = image {
+            let imageRatio = image.size.height / image.size.width
+            let newHeight = UIScreen.main.bounds.width * imageRatio
+            imageHeightConstraint.constant = newHeight
         }
     }
 }

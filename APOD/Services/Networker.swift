@@ -61,16 +61,19 @@ class Networker {
         }.resume()
     }
     
-    func fetchImage(with url: String, completion: @escaping (Data) -> Void) {
-        guard let url = URL(string: url) else { return }
-        
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else { return }
+    func fetchImage(with url: URL, completion: @escaping (Data, URLResponse) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, let response = response else {
+                print(error?.localizedDescription ?? "No error description")
+                return
+            }
+            
+            guard url == response.url else { return }
             
             DispatchQueue.main.async {
-                completion(imageData)
+                completion(data, response)
             }
-        }
+        }.resume()
     }
     
     private func createURL(withRequestType requestType: RequestType) -> (String, Bool) {
