@@ -16,6 +16,7 @@
 		7426B60F276D4A0A005C95D5 /* AstronomyPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7426B60E276D4A0A005C95D5 /* AstronomyPicture.swift */; };
 		7426B612276EDB57005C95D5 /* AstronomyPictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7426B611276EDB57005C95D5 /* AstronomyPictureCell.swift */; };
 		7426B615276EDE55005C95D5 /* Networker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7426B614276EDE55005C95D5 /* Networker.swift */; };
+		744BF7E3279542C700986A62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744BF7E2279542C700986A62 /* SettingsViewController.swift */; };
 		74FCD2DF278B2FDE005B8021 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FCD2DE278B2FDE005B8021 /* CacheManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		7426B60E276D4A0A005C95D5 /* AstronomyPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronomyPicture.swift; sourceTree = "<group>"; };
 		7426B611276EDB57005C95D5 /* AstronomyPictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronomyPictureCell.swift; sourceTree = "<group>"; };
 		7426B614276EDE55005C95D5 /* Networker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networker.swift; sourceTree = "<group>"; };
+		744BF7E2279542C700986A62 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		74FCD2DE278B2FDE005B8021 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				7426B60A276D48D9005C95D5 /* PictureListViewController.swift */,
+				744BF7E2279542C700986A62 /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				7426B5F8276D47BA005C95D5 /* SceneDelegate.swift in Sources */,
 				7426B615276EDE55005C95D5 /* Networker.swift in Sources */,
 				74FCD2DF278B2FDE005B8021 /* CacheManager.swift in Sources */,
+				744BF7E3279542C700986A62 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
