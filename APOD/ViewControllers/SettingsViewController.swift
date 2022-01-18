@@ -8,22 +8,48 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
+    
+    private var singleDate = Date()
 
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet var stackViewCollection: [UIStackView]!
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupUI()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - IBActions
+    
+    @IBAction func helpButtonPressed(_ sender: UIBarButtonItem) {
     }
-    */
-
+    
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+    
+    @IBAction func segmentedControlAction() {
+        setupUI()
+    }
+    
+    @IBAction func saveButtonPressed() {
+    }
+    
+    @IBAction func singleDatePickerAction() {
+       
+    }
+    
+    // MARK: - Private methods
+    
+    private func setupUI() {
+        for stackView in stackViewCollection {
+            stackView.isHidden = true
+        }
+        
+        if segmentedControl.selectedSegmentIndex <= stackViewCollection.count - 1 {
+            stackViewCollection[segmentedControl.selectedSegmentIndex].isHidden = false
+        }
+    }
 }
