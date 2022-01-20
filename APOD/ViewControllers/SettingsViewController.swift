@@ -9,16 +9,21 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    private var singleDate = Date()
+    private var singleDate: Date?
+    private var dateRange: [Date]?
+    private var randomNumber: Int?
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet var stackViewCollection: [UIStackView]!
+    
+    @IBOutlet weak var singleDatePicker: UIDatePicker!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setDateRestriction(for: singleDatePicker)
     }
     
     // MARK: - IBActions
@@ -48,8 +53,22 @@ class SettingsViewController: UIViewController {
             stackView.isHidden = true
         }
         
+        let labelTexts = DataManager.shared.getTextData(for: .settingsLabel)
+        
+        if segmentedControl.selectedSegmentIndex <= labelTexts.count - 1 {
+            descriptionLabel.text = labelTexts[segmentedControl.selectedSegmentIndex]
+        }
+        
         if segmentedControl.selectedSegmentIndex <= stackViewCollection.count - 1 {
             stackViewCollection[segmentedControl.selectedSegmentIndex].isHidden = false
         }
+    }
+    
+    private func setDateRestriction(for datePicker: UIDatePicker) {
+        let minimumDateComponents = DateComponents(year: 1995, month: 6, day: 16)
+        let minimumDate = Calendar.current.date(from: minimumDateComponents)
+        
+        datePicker.minimumDate = minimumDate
+        datePicker.maximumDate = Date()
     }
 }

@@ -13,9 +13,9 @@ class DataManager {
     
     private let texts: [TextDescription: [String]] = [
         .settingsLabel: [
-            "There will be some text for Label One",
-            "There will be some text for Label Two",
-            "There will be some text for Label Three"
+            "There will be some text for Label One here",
+            "There will be some text for Label Two here",
+            "There will be some text for Label Three here"
         ],
         .help: [
             "There will be some description text here"
@@ -32,7 +32,7 @@ class DataManager {
     }
 }
 
-// MARK: - Text data enum
+// MARK: - Text description enum
 
 enum TextDescription {
     case settingsLabel

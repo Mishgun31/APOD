@@ -214,6 +214,7 @@
                     <connections>
                         <outlet property="descriptionLabel" destination="O1G-pc-JkC" id="gHk-oa-2On"/>
                         <outlet property="segmentedControl" destination="WnE-Va-UGj" id="KUq-Jy-hyg"/>
+                        <outlet property="singleDatePicker" destination="y9J-nt-BfX" id="eeM-1O-cYk"/>
                         <outletCollection property="stackViewCollection" destination="6M2-dQ-qCE" collectionClass="NSMutableArray" id="qmb-d6-sUW"/>
                         <outletCollection property="stackViewCollection" destination="aQE-tD-a26" collectionClass="NSMutableArray" id="OV3-UT-Cy0"/>
                         <outletCollection property="stackViewCollection" destination="PBM-MQ-ehk" collectionClass="NSMutableArray" id="S38-b9-fFO"/>
