@@ -11,6 +11,8 @@ class PictureListViewController: UITableViewController {
     
     private var todayPicture: AstronomyPicture?
     private var pictures: [AstronomyPicture]?
+    
+    private var pictureDimension = PictureDimension(height: 0, width: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,45 @@ class PictureListViewController: UITableViewController {
         
         return cell
     }
+    
+    // MARK: - Table view delegate
+    
+    override func tableView(_ tableView: UITableView,
+                            didSelectRowAt indexPath: IndexPath) {
+        
+        guard let selectedCell = tableView.cellForRow(at: indexPath)
+                as? AstronomyPictureCell else { return }
+        
+        if let size = selectedCell.astronomyImage.image?.size {
+            pictureDimension = PictureDimension(
+                height: size.height,
+                width: size.width
+            )
+        }
+        
+        performSegue(withIdentifier: "DetailedPictureVCSegue",
+                     sender: indexPath)
+    }
+    
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailedPictureVC = segue.destination
+                as? DetailedPictureTableViewController else { return }
+        
+        guard let indexPath = sender as? IndexPath else { return }
+
+        switch indexPath.section {
+        case 0:
+            detailedPictureVC.astronomyPicture = todayPicture
+        default:
+            detailedPictureVC.astronomyPicture = pictures?[indexPath.row]
+        }
+        
+//        detailedPictureVC.pictureDimension = pictureDimension
+    }
+    
+    // MARK: - Private methods
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         "Test Header"
@@ -114,14 +155,5 @@ class PictureListViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

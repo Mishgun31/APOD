@@ -18,3 +18,13 @@ struct AstronomyPicture: Decodable {
     let thumbnailUrl: String?
     let copyright: String?
 }
+
+struct PictureDimension {
+    
+    let height: Double
+    let width: Double
+    
+    var aspectRatio: Double {
+        height / width
+    }
+}
