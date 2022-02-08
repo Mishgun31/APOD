@@ -21,6 +21,7 @@ class PictureListViewController: UITableViewController {
         
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = 30
     }
 
     // MARK: - Table view data source
@@ -86,13 +87,21 @@ class PictureListViewController: UITableViewController {
             detailedPictureVC.astronomyPicture = pictures?[indexPath.row]
         }
         
-//        detailedPictureVC.pictureDimension = pictureDimension
+        detailedPictureVC.pictureDimension = pictureDimension
+    }
+    
+    @IBAction func unwind(for segue: UIStoryboardSegue) {
+        guard let settingVC = segue.source as? SettingsViewController else { return }
+        getData(with: settingVC.request)
     }
     
     // MARK: - Private methods
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Test Header"
+    override func tableView(_ tableView: UITableView,
+                            titleForHeaderInSection section: Int) -> String? {
+        section == 0
+        ? "The photo of the day"
+        : "Test header"
     }
     
     private func getData(with requestType: RequestType) {
@@ -100,7 +109,13 @@ class PictureListViewController: UITableViewController {
             switch result {
             case .success(let astronomyPictureObject):
                 if let astronomyPicture = astronomyPictureObject as? AstronomyPicture {
-                    self.todayPicture = astronomyPicture
+                    switch requestType {
+                    case .defaultRequest:
+                        self.todayPicture = astronomyPicture
+                    default:
+                        self.pictures?.removeAll()
+                        self.pictures?.append(astronomyPicture)
+                    }
                     print("111")
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
                     self.pictures = astronomyPictures
@@ -111,13 +126,6 @@ class PictureListViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
-    }
-    
-    private func formatDate(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        
-        return dateFormatter.string(from: date)
     }
 
     /*

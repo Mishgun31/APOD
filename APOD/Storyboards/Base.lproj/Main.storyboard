@@ -9,17 +9,17 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Astronomy Pictures-->
         <scene sceneID="VAq-lp-Deg">
             <objects>
                 <tableViewController id="njj-1W-DFq" customClass="PictureListViewController" customModule="APOD" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="KkV-fH-kan">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="KkV-fH-kan">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="306" id="iAN-4X-qkA" customClass="AstronomyPictureCell" customModule="APOD" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="320" height="306"/>
+                                <rect key="frame" x="0.0" y="32" width="320" height="306"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iAN-4X-qkA" id="tot-O2-o5Q">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="306"/>
@@ -34,11 +34,14 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zjr-ih-o3f">
-                                                    <rect key="frame" x="8" y="36.5" width="272" height="211"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zjr-ih-o3f">
+                                                    <rect key="frame" x="8" y="36.5" width="272" height="200"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="200" id="Lcd-JF-iYz"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-Gu-xu2">
-                                                    <rect key="frame" x="8" y="255.5" width="272" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-Gu-xu2">
+                                                    <rect key="frame" x="8" y="244.5" width="272" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -78,7 +81,7 @@
                             <outlet property="delegate" destination="njj-1W-DFq" id="Rbe-2J-2lB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="ZfR-Br-kPz">
+                    <navigationItem key="navigationItem" title="Astronomy Pictures" id="ZfR-Br-kPz">
                         <barButtonItem key="rightBarButtonItem" title="Settings" image="slider.horizontal.3" catalog="system" id="LW5-0e-3BI">
                             <connections>
                                 <segue destination="Iss-xr-az4" kind="presentation" id="GEE-37-6ho"/>
@@ -112,44 +115,41 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPH-4V-WMb">
-                                                    <rect key="frame" x="16" y="11" width="288" height="40"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="16" y="0.0" width="288" height="51"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="OPH-4V-WMb" firstAttribute="trailing" secondItem="OIh-jd-74v" secondAttribute="trailingMargin" id="JHo-jN-Q8M"/>
+                                                <constraint firstItem="OPH-4V-WMb" firstAttribute="top" secondItem="OIh-jd-74v" secondAttribute="top" id="PLV-u5-mkI"/>
                                                 <constraint firstItem="OPH-4V-WMb" firstAttribute="leading" secondItem="OIh-jd-74v" secondAttribute="leadingMargin" id="Qxb-yh-tju"/>
                                                 <constraint firstItem="OPH-4V-WMb" firstAttribute="bottom" secondItem="OIh-jd-74v" secondAttribute="bottomMargin" id="YUf-Ir-mMR"/>
-                                                <constraint firstItem="OPH-4V-WMb" firstAttribute="top" secondItem="OIh-jd-74v" secondAttribute="topMargin" id="kW7-OE-fy3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="189" id="FZ0-lH-srp">
-                                        <rect key="frame" x="0.0" y="80" width="320" height="189"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="122" id="FZ0-lH-srp">
+                                        <rect key="frame" x="0.0" y="80" width="320" height="122"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FZ0-lH-srp" id="VFk-eA-pGh">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="189"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d1c-9i-8St">
-                                                    <rect key="frame" x="16" y="11" width="288" height="167"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="167" id="sR0-Ir-LRj"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="16" y="0.0" width="288" height="122"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="top" secondItem="VFk-eA-pGh" secondAttribute="topMargin" id="7Cm-OL-OtI"/>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="bottom" secondItem="VFk-eA-pGh" secondAttribute="bottomMargin" id="LLj-ga-QDQ"/>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="leading" secondItem="VFk-eA-pGh" secondAttribute="leadingMargin" id="MHq-ch-uql"/>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="trailing" secondItem="VFk-eA-pGh" secondAttribute="trailingMargin" id="emo-aG-XUV"/>
+                                                <constraint firstItem="d1c-9i-8St" firstAttribute="leading" secondItem="VFk-eA-pGh" secondAttribute="leadingMargin" id="6n3-Sq-fea"/>
+                                                <constraint firstItem="d1c-9i-8St" firstAttribute="trailing" secondItem="VFk-eA-pGh" secondAttribute="trailingMargin" id="D0M-II-1Jr"/>
+                                                <constraint firstAttribute="bottom" secondItem="d1c-9i-8St" secondAttribute="bottom" id="s2L-fd-zlT"/>
+                                                <constraint firstItem="d1c-9i-8St" firstAttribute="top" secondItem="VFk-eA-pGh" secondAttribute="top" id="ywF-6l-0tq"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="83" id="EzC-E5-aw5">
-                                        <rect key="frame" x="0.0" y="269" width="320" height="83"/>
+                                        <rect key="frame" x="0.0" y="202" width="320" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EzC-E5-aw5" id="y1g-An-McR">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
@@ -178,11 +178,10 @@
                             <outlet property="delegate" destination="Hdl-5E-okd" id="aPL-rx-0R3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="SQg-oq-B2o"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="SQg-oq-B2o"/>
                     <connections>
-                        <outlet property="astonomyImage" destination="d1c-9i-8St" id="2H3-Yp-eGn"/>
+                        <outlet property="astronomyImage" destination="d1c-9i-8St" id="2H3-Yp-eGn"/>
                         <outlet property="descriptionLabel" destination="5FR-2T-2Mg" id="O0m-jQ-5Kl"/>
-                        <outlet property="imageHeightConstraint" destination="sR0-Ir-LRj" id="ZxJ-mV-7wJ"/>
                         <outlet property="titleLabel" destination="OPH-4V-WMb" id="fBh-cU-1XG"/>
                     </connections>
                 </tableViewController>
@@ -221,7 +220,7 @@
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="y9J-nt-BfX">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="364"/>
                                         <connections>
-                                            <action selector="singleDatePickerAction" destination="GuG-BA-id5" eventType="valueChanged" id="SFw-Rj-B7k"/>
+                                            <action selector="singleDatePickerAction:" destination="GuG-BA-id5" eventType="valueChanged" id="RVC-Kt-bmR"/>
                                         </connections>
                                     </datePicker>
                                 </subviews>
@@ -282,7 +281,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
-                                    <action selector="saveButtonPressed" destination="GuG-BA-id5" eventType="touchUpInside" id="ebh-l5-omL"/>
+                                    <segue destination="sy6-69-V2D" kind="unwind" unwindAction="unwindFor:" id="ZCC-Px-1zx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -322,13 +321,16 @@
                     <connections>
                         <outlet property="descriptionLabel" destination="O1G-pc-JkC" id="gHk-oa-2On"/>
                         <outlet property="segmentedControl" destination="WnE-Va-UGj" id="KUq-Jy-hyg"/>
-                        <outlet property="singleDatePicker" destination="y9J-nt-BfX" id="eeM-1O-cYk"/>
                         <outletCollection property="stackViewCollection" destination="6M2-dQ-qCE" collectionClass="NSMutableArray" id="qmb-d6-sUW"/>
                         <outletCollection property="stackViewCollection" destination="aQE-tD-a26" collectionClass="NSMutableArray" id="OV3-UT-Cy0"/>
                         <outletCollection property="stackViewCollection" destination="PBM-MQ-ehk" collectionClass="NSMutableArray" id="S38-b9-fFO"/>
+                        <outletCollection property="datePickers" destination="y9J-nt-BfX" collectionClass="NSMutableArray" id="V5N-Lx-Juc"/>
+                        <outletCollection property="datePickers" destination="Pac-dj-jab" collectionClass="NSMutableArray" id="d8E-lD-ocq"/>
+                        <outletCollection property="datePickers" destination="Ztt-hj-VpU" collectionClass="NSMutableArray" id="41a-Ux-XfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6r-lF-5wW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="sy6-69-V2D" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1614" y="955"/>
         </scene>
@@ -336,8 +338,8 @@
         <scene sceneID="79p-MD-eLD">
             <objects>
                 <navigationController id="mtX-Pe-5kF" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fUv-Tc-U7n">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="fUv-Tc-U7n">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

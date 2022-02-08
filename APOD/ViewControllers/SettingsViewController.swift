@@ -9,21 +9,19 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    private var singleDate: Date?
-    private var dateRange: [Date]?
-    private var randomNumber: Int?
+    var request = RequestType.defaultRequest
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet var stackViewCollection: [UIStackView]!
     
-    @IBOutlet weak var singleDatePicker: UIDatePicker!
+    @IBOutlet var datePickers: [UIDatePicker]!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setDateRestriction(for: singleDatePicker)
+        setDateRestriction(for: datePickers)
     }
     
     // MARK: - IBActions
@@ -39,11 +37,9 @@ class SettingsViewController: UIViewController {
         setupUI()
     }
     
-    @IBAction func saveButtonPressed() {
-    }
-    
-    @IBAction func singleDatePickerAction() {
-       
+    @IBAction func singleDatePickerAction(_ sender: UIDatePicker) {
+        let stringDate = formatDate(from: sender.date)
+        request = .chosenDateRequest(date: stringDate)
     }
     
     // MARK: - Private methods
@@ -64,11 +60,20 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    private func setDateRestriction(for datePicker: UIDatePicker) {
+    private func setDateRestriction(for datePickers: [UIDatePicker]) {
         let minimumDateComponents = DateComponents(year: 1995, month: 6, day: 16)
         let minimumDate = Calendar.current.date(from: minimumDateComponents)
         
-        datePicker.minimumDate = minimumDate
-        datePicker.maximumDate = Date()
+        for datePicker in datePickers {
+            datePicker.minimumDate = minimumDate
+            datePicker.maximumDate = Date()
+        }
+    }
+    
+    private func formatDate(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        
+        return dateFormatter.string(from: date)
     }
 }

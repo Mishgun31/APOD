@@ -12,36 +12,42 @@ class DetailedPictureTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    @IBOutlet weak var astonomyImage: UIImageView!
-    
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var astronomyImage: UIImageView!
     
     var astronomyPicture: AstronomyPicture!
     var pictureDimension: PictureDimension!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        changeImageHeightConstraint()
+//        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
         setupLayout()
     }
     
     // MARK: - Private methods
     
-    private func changeImageHeightConstraint() {
-        imageHeightConstraint.constant = tableView.bounds.width * pictureDimension.aspectRatio
-    }
-    
     private func setupLayout() {
         titleLabel.text = astronomyPicture.title
         descriptionLabel.text = astronomyPicture.explanation
+        astronomyImage.layer.cornerRadius = 15
         
         CacheManager.shared.getImage(with: astronomyPicture.url ?? "") { image in
-            self.astonomyImage.image = image
+            self.astronomyImage.image = image
         }
     }
 
     // MARK: - Table view data source
-
+    
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 1 {
+            let margins = tableView.layoutMargins
+            let cellWidth = tableView.bounds.width - margins.left - margins.right
+            return cellWidth * pictureDimension.aspectRatio
+        }
+        return UITableView.automaticDimension
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
