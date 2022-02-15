@@ -214,13 +214,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6M2-dQ-qCE">
-                                <rect key="frame" x="16" y="155.5" width="288" height="364"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6M2-dQ-qCE">
+                                <rect key="frame" x="16" y="155.5" width="288" height="290"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="y9J-nt-BfX">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="364"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="290"/>
                                         <connections>
-                                            <action selector="singleDatePickerAction:" destination="GuG-BA-id5" eventType="valueChanged" id="RVC-Kt-bmR"/>
+                                            <action selector="singleDatePickerAction" destination="GuG-BA-id5" eventType="valueChanged" id="CJe-bk-Fbe"/>
                                         </connections>
                                     </datePicker>
                                 </subviews>
@@ -228,31 +228,37 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aQE-tD-a26">
                                 <rect key="frame" x="16" y="155.5" width="288" height="120"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HDG-Bc-qbg">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HDG-Bc-qbg">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OAr-xh-MHB">
-                                                <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="39.5" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Pac-dj-jab">
-                                                <rect key="frame" x="148" y="0.0" width="140" height="50"/>
+                                                <rect key="frame" x="47.5" y="0.0" width="240.5" height="50"/>
+                                                <connections>
+                                                    <action selector="rangedDatePickerAction:" destination="GuG-BA-id5" eventType="valueChanged" id="81Y-mP-r6Y"/>
+                                                </connections>
                                             </datePicker>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EHW-aP-XCj">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EHW-aP-XCj">
                                         <rect key="frame" x="0.0" y="70" width="288" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONC-S1-iKb">
-                                                <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="18.5" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ztt-hj-VpU">
-                                                <rect key="frame" x="148" y="0.0" width="140" height="50"/>
+                                            <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ztt-hj-VpU">
+                                                <rect key="frame" x="26.5" y="0.0" width="261.5" height="50"/>
+                                                <connections>
+                                                    <action selector="rangedDatePickerAction:" destination="GuG-BA-id5" eventType="valueChanged" id="ch1-zi-CDF"/>
+                                                </connections>
                                             </datePicker>
                                         </subviews>
                                     </stackView>
@@ -261,13 +267,16 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="PBM-MQ-ehk">
                                 <rect key="frame" x="56" y="155.5" width="208" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pn6-kz-WVo">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pn6-kz-WVo">
                                         <rect key="frame" x="0.0" y="3" width="94" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="0l2-ed-ClJ">
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="0l2-ed-ClJ">
                                         <rect key="frame" x="114" y="4" width="94" height="32"/>
+                                        <connections>
+                                            <action selector="stepperAction" destination="GuG-BA-id5" eventType="valueChanged" id="yFp-wC-NQm"/>
+                                        </connections>
                                     </stepper>
                                 </subviews>
                                 <constraints>
@@ -296,12 +305,12 @@
                             <constraint firstItem="6M2-dQ-qCE" firstAttribute="top" secondItem="O1G-pc-JkC" secondAttribute="bottom" constant="20" id="SEp-G9-IWG"/>
                             <constraint firstItem="1rZ-24-ucj" firstAttribute="trailing" secondItem="O1G-pc-JkC" secondAttribute="trailing" constant="16" id="W0a-Jh-bMQ"/>
                             <constraint firstItem="1rZ-24-ucj" firstAttribute="trailing" secondItem="WnE-Va-UGj" secondAttribute="trailing" constant="16" id="ZY8-zZ-iNd"/>
+                            <constraint firstItem="1rZ-24-ucj" firstAttribute="bottom" secondItem="CEV-Sr-d9A" secondAttribute="bottom" constant="50" id="aBa-JG-3WR"/>
                             <constraint firstItem="6M2-dQ-qCE" firstAttribute="leading" secondItem="1rZ-24-ucj" secondAttribute="leading" constant="16" id="aqS-qf-34k"/>
                             <constraint firstItem="O1G-pc-JkC" firstAttribute="leading" secondItem="1rZ-24-ucj" secondAttribute="leading" constant="16" id="eGm-Js-BhZ"/>
-                            <constraint firstItem="1rZ-24-ucj" firstAttribute="bottom" secondItem="CEV-Sr-d9A" secondAttribute="bottom" constant="50" id="eLc-Np-x5d"/>
                             <constraint firstItem="WnE-Va-UGj" firstAttribute="top" secondItem="1rZ-24-ucj" secondAttribute="top" constant="8" id="k1I-Di-C2P"/>
                             <constraint firstItem="PBM-MQ-ehk" firstAttribute="centerX" secondItem="RSe-sL-cz6" secondAttribute="centerX" id="l9I-fb-vf0"/>
-                            <constraint firstAttribute="trailing" secondItem="6M2-dQ-qCE" secondAttribute="trailing" constant="16" id="mSH-Wt-hU4"/>
+                            <constraint firstItem="1rZ-24-ucj" firstAttribute="trailing" secondItem="6M2-dQ-qCE" secondAttribute="trailing" constant="16" id="mSH-Wt-hU4"/>
                             <constraint firstItem="PBM-MQ-ehk" firstAttribute="top" secondItem="O1G-pc-JkC" secondAttribute="bottom" constant="20" id="pdY-Em-1p4"/>
                             <constraint firstItem="aQE-tD-a26" firstAttribute="top" secondItem="O1G-pc-JkC" secondAttribute="bottom" constant="20" id="zJg-fw-ufw"/>
                         </constraints>
@@ -320,19 +329,21 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionLabel" destination="O1G-pc-JkC" id="gHk-oa-2On"/>
+                        <outlet property="firstDatePicker" destination="Pac-dj-jab" id="0KY-Iw-CMW"/>
+                        <outlet property="lastDatePicker" destination="Ztt-hj-VpU" id="YLn-5f-r8a"/>
+                        <outlet property="numericalTextField" destination="Pn6-kz-WVo" id="BON-Ak-ySI"/>
                         <outlet property="segmentedControl" destination="WnE-Va-UGj" id="KUq-Jy-hyg"/>
+                        <outlet property="singleDatePicker" destination="y9J-nt-BfX" id="z0Z-UO-WzL"/>
+                        <outlet property="stepper" destination="0l2-ed-ClJ" id="2Yw-KP-jBK"/>
                         <outletCollection property="stackViewCollection" destination="6M2-dQ-qCE" collectionClass="NSMutableArray" id="qmb-d6-sUW"/>
                         <outletCollection property="stackViewCollection" destination="aQE-tD-a26" collectionClass="NSMutableArray" id="OV3-UT-Cy0"/>
                         <outletCollection property="stackViewCollection" destination="PBM-MQ-ehk" collectionClass="NSMutableArray" id="S38-b9-fFO"/>
-                        <outletCollection property="datePickers" destination="y9J-nt-BfX" collectionClass="NSMutableArray" id="V5N-Lx-Juc"/>
-                        <outletCollection property="datePickers" destination="Pac-dj-jab" collectionClass="NSMutableArray" id="d8E-lD-ocq"/>
-                        <outletCollection property="datePickers" destination="Ztt-hj-VpU" collectionClass="NSMutableArray" id="41a-Ux-XfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6r-lF-5wW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="sy6-69-V2D" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1614" y="955"/>
+            <point key="canvasLocation" x="1612.5" y="954.92957746478874"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="79p-MD-eLD">
