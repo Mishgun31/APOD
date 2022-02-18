@@ -45,6 +45,7 @@ class SettingsViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func helpButtonPressed(_ sender: UIBarButtonItem) {
+        showAlert(withTitle: "Title", andMessage: "Message")
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
