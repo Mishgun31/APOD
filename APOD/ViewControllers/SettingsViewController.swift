@@ -17,11 +17,11 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var lastDatePicker: UIDatePicker!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var numericalTextField: UITextField!
+    @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var stepper: UIStepper!
     
     var request = RequestType.defaultRequest
-    private var dateRange = (Date(), Date())
+    private lazy var dateRange = (firstDatePicker.date, lastDatePicker.date)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,9 @@ class SettingsViewController: UIViewController {
         
         segmentedControlAction()
         
-        numericalTextField.delegate = self
+        numberTextField.delegate = self
         addGestureRecognizer()
-        numericalTextField.addTarget(
+        numberTextField.addTarget(
             self,
             action: #selector(textFieldDidChange),
             for: .editingChanged
@@ -45,7 +45,7 @@ class SettingsViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func helpButtonPressed(_ sender: UIBarButtonItem) {
-        showAlert(withTitle: "Title", andMessage: "Message")
+        showAlert(withTitle: "Help", andMessage: TextDescription.help.rawValue)
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -71,26 +71,35 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func rangedDatePickerAction(_ sender: UIDatePicker) {
-        if sender == firstDatePicker  {
+        if sender == firstDatePicker {
             dateRange.0 = sender.date
         } else {
             dateRange.1 = sender.date
         }
-        
-        guard dateRange.0 < dateRange.1 else { return }
-        
+
         let stringFirstDate = formatDate(from: dateRange.0)
-        let stringSecondDtae = formatDate(from: dateRange.1)
+        let stringSecondDate = formatDate(from: dateRange.1)
         request = .rangeDatesRequest(startDate: stringFirstDate,
-                                     endDate: stringSecondDtae)
+                                     endDate: stringSecondDate)
     }
-    
+     
     @IBAction func stepperAction() {
-        if numericalTextField.text == "" {
+        if numberTextField.text == "" {
             stepper.value = 1
         }
-        numericalTextField.text = String(format: "%.f", stepper.value)
+        numberTextField.text = String(format: "%.f", stepper.value)
         request = .randomObjectsRequest(numberOfObjects: Int(stepper.value))
+    }
+    
+    @IBAction func saveButtonPressed() {
+        if segmentedControl.selectedSegmentIndex == 1,
+           firstDatePicker.date >= lastDatePicker.date {
+            showAlert(withTitle: "Warning",
+                      andMessage: TextDescription.dateRangeWarning.rawValue)
+            return
+        }
+
+        performSegue(withIdentifier: "unwind", sender: self)
     }
     
     // MARK: - Private methods
@@ -100,7 +109,7 @@ class SettingsViewController: UIViewController {
             stackView.isHidden = true
         }
         
-        let labelTexts = DataManager.shared.getTextData(for: .settingsLabel)
+        let labelTexts = DataManager.shared.getSettingsLabelTexts()
         
         if segmentedControl.selectedSegmentIndex <= labelTexts.count - 1 {
             descriptionLabel.text = labelTexts[segmentedControl.selectedSegmentIndex]
@@ -110,15 +119,27 @@ class SettingsViewController: UIViewController {
             stackViewCollection[segmentedControl.selectedSegmentIndex].isHidden = false
         }
         
-        numericalTextField.text = String(format: "%.f", stepper.value)
+        numberTextField.text = String(format: "%.f", stepper.value)
     }
     
     private func setDateRestriction(for datePicker: UIDatePicker) {
+        // The server is located in the USA and the new photo of the day is
+        // available in US time zone
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        
+        dateFormatter.timeZone = TimeZone(abbreviation: "PST")
+        let currentDate = Date()
+        let pstStringDate = dateFormatter.string(from: currentDate)
+        let pstDate = dateFormatter.date(from: pstStringDate)
+        
         let minimumDateComponents = DateComponents(year: 1995, month: 6, day: 16)
         let minimumDate = Calendar.current.date(from: minimumDateComponents)
         
         datePicker.minimumDate = minimumDate
-        datePicker.maximumDate = Date()
+        datePicker.maximumDate = pstDate
     }
     
     private func formatDate(from date: Date) -> String {
@@ -146,6 +167,28 @@ extension SettingsViewController: UITextFieldDelegate {
         view.endEditing(true)
     }
     
+    @objc private func textFieldDidChange() {
+        guard let valueFromText = Double(numberTextField.text ?? "") else {
+            stepper.value = 1
+            return
+        }
+        stepper.value = valueFromText
+        
+        if valueFromText == 0 {
+            showAlert(withTitle: "Warning",
+                      andMessage: TextDescription.randomPicturesWarning.rawValue)
+            numberTextField.text = "1"
+        } else if valueFromText > 50 {
+            showAlert(withTitle: "Warning",
+                      andMessage: TextDescription.randomPicturesWarning.rawValue)
+            numberTextField.text = "50"
+        }
+    }
+
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let keyboardToolbar = UIToolbar(
             frame: CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -170,29 +213,10 @@ extension SettingsViewController: UITextFieldDelegate {
         
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if textField.text == "" {
-            // add calling alert here
+            showAlert(withTitle: "Warning",
+                      andMessage: TextDescription.randomPicturesWarning.rawValue)
             textField.text = "1"
         }
         request = .randomObjectsRequest(numberOfObjects: Int(stepper.value))
-    }
-    
-    @objc private func textFieldDidChange() {
-        guard let valueFromText = Double(numericalTextField.text ?? "") else {
-            stepper.value = 1
-            return
-        }
-        stepper.value = valueFromText
-        
-        if valueFromText == 0 {
-            // add calling alert here
-            numericalTextField.text = "1"
-        } else if valueFromText > 50 {
-            // add calling alert here
-            numericalTextField.text = "50"
-        }
-    }
-
-    @objc private func hideKeyboard() {
-        view.endEditing(true)
     }
 }

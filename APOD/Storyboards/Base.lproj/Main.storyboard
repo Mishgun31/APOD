@@ -100,7 +100,7 @@
         <scene sceneID="87w-yX-Fii">
             <objects>
                 <tableViewController id="Hdl-5E-okd" customClass="DetailedPictureTableViewController" customModule="APOD" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="mYM-1p-KG8">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="mYM-1p-KG8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -240,7 +240,7 @@
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Pac-dj-jab">
                                                 <rect key="frame" x="47.5" y="0.0" width="240.5" height="50"/>
                                                 <connections>
-                                                    <action selector="rangedDatePickerAction:" destination="GuG-BA-id5" eventType="valueChanged" id="81Y-mP-r6Y"/>
+                                                    <action selector="rangedDatePickerAction:" destination="GuG-BA-id5" eventType="editingDidEnd" id="5Si-0m-st8"/>
                                                 </connections>
                                             </datePicker>
                                         </subviews>
@@ -257,7 +257,7 @@
                                             <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ztt-hj-VpU">
                                                 <rect key="frame" x="26.5" y="0.0" width="261.5" height="50"/>
                                                 <connections>
-                                                    <action selector="rangedDatePickerAction:" destination="GuG-BA-id5" eventType="valueChanged" id="ch1-zi-CDF"/>
+                                                    <action selector="rangedDatePickerAction:" destination="GuG-BA-id5" eventType="editingDidEnd" id="IHv-jH-pTb"/>
                                                 </connections>
                                             </datePicker>
                                         </subviews>
@@ -290,7 +290,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
-                                    <segue destination="sy6-69-V2D" kind="unwind" unwindAction="unwindFor:" id="ZCC-Px-1zx"/>
+                                    <action selector="saveButtonPressed" destination="GuG-BA-id5" eventType="touchUpInside" id="PeT-Hl-FLv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -331,13 +331,14 @@
                         <outlet property="descriptionLabel" destination="O1G-pc-JkC" id="gHk-oa-2On"/>
                         <outlet property="firstDatePicker" destination="Pac-dj-jab" id="0KY-Iw-CMW"/>
                         <outlet property="lastDatePicker" destination="Ztt-hj-VpU" id="YLn-5f-r8a"/>
-                        <outlet property="numericalTextField" destination="Pn6-kz-WVo" id="BON-Ak-ySI"/>
+                        <outlet property="numberTextField" destination="Pn6-kz-WVo" id="BON-Ak-ySI"/>
                         <outlet property="segmentedControl" destination="WnE-Va-UGj" id="KUq-Jy-hyg"/>
                         <outlet property="singleDatePicker" destination="y9J-nt-BfX" id="z0Z-UO-WzL"/>
                         <outlet property="stepper" destination="0l2-ed-ClJ" id="2Yw-KP-jBK"/>
                         <outletCollection property="stackViewCollection" destination="6M2-dQ-qCE" collectionClass="NSMutableArray" id="qmb-d6-sUW"/>
                         <outletCollection property="stackViewCollection" destination="aQE-tD-a26" collectionClass="NSMutableArray" id="OV3-UT-Cy0"/>
                         <outletCollection property="stackViewCollection" destination="PBM-MQ-ehk" collectionClass="NSMutableArray" id="S38-b9-fFO"/>
+                        <segue destination="sy6-69-V2D" kind="unwind" identifier="unwind" unwindAction="unwindFor:" id="a5q-ix-3ca"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6r-lF-5wW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
