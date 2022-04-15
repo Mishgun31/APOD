@@ -16,8 +16,7 @@ class PictureListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getData(with: .defaultRequest)
-        getData(with: .randomObjectsRequest(numberOfObjects: 10))
+        getData()
         
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
@@ -112,13 +111,16 @@ class PictureListViewController: UITableViewController {
                     switch requestType {
                     case .defaultRequest:
                         self.todayPicture = astronomyPicture
+                        DataManager.shared.saveSingle(picture: self.todayPicture)
                     default:
                         self.pictures?.removeAll()
                         self.pictures?.append(astronomyPicture)
+                        DataManager.shared.save(pictures: self.pictures)
                     }
                     print("111")
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
                     self.pictures = astronomyPictures
+                    DataManager.shared.save(pictures: self.pictures)
                     print("222")
                 }
                 self.tableView.reloadData()
@@ -127,41 +129,18 @@ class PictureListViewController: UITableViewController {
             }
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
+    private func getData() {
+        if let astronomyPicture = DataManager.shared.loadPicture() {
+            todayPicture = astronomyPicture
+        } else {
+            getData(with: .defaultRequest)
+        }
+        
+        if let astronomyPictures = DataManager.shared.loadPictures() {
+            pictures = astronomyPictures
+        } else {
+            getData(with: .randomObjectsRequest(numberOfObjects: 10))
+        }
+    }
 }

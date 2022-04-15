@@ -22,6 +22,34 @@ class DataManager {
     func getSettingsLabelTexts() -> [String] {
         settingsLabelTexts
     }
+    
+    func saveSingle(picture: AstronomyPicture?) {
+        guard let data = try? JSONEncoder().encode(picture) else { return }
+        UserDefaults.standard.set(data, forKey: "picture")
+    }
+    
+    func save(pictures: [AstronomyPicture]?) {
+        guard let data = try? JSONEncoder().encode(pictures) else { return }
+        UserDefaults.standard.set(data, forKey: "pictures")
+    }
+    
+    func loadPicture() -> AstronomyPicture? {
+        guard let data = UserDefaults.standard.object(forKey: "picture")
+                as? Data else { return nil}
+        guard let astronomyPicture = try? JSONDecoder().decode(AstronomyPicture.self, from: data) else {
+            return nil
+        }
+        return astronomyPicture
+    }
+    
+    func loadPictures() -> [AstronomyPicture]? {
+        guard let data = UserDefaults.standard.object(forKey: "pictures")
+                as? Data else { return nil}
+        guard let astronomyPicture = try? JSONDecoder().decode([AstronomyPicture].self, from: data) else {
+            return nil
+        }
+        return astronomyPicture
+    }
 }
 
 // MARK: - Text description enum

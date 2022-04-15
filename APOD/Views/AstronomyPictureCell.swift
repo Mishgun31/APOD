@@ -14,11 +14,16 @@ class AstronomyPictureCell: UITableViewCell {
     
     @IBOutlet weak var astronomyImage: UIImageView!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        astronomyImage.image = nil
+    }
+    
     func configure(with data: AstronomyPicture?) {
         dateLabel.text = data?.date
         titleLabel.text = data?.title
         
-//        astronomyImage.image = UIImage(named: "SwiftImage")
+//        self.astronomyImage.image = UIImage(named: "SwiftImage")
         
         CacheManager.shared.getImage(with: data?.url ?? "") { image in
             self.astronomyImage.image = image
