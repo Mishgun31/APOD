@@ -21,4 +21,11 @@ extension UIViewController {
         alert.addAction(actionButton)
         present(alert, animated: true)
     }
+    
+    func formatDate(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        
+        return dateFormatter.string(from: date)
+    }
 }

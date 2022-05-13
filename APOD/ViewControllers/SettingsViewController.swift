@@ -142,13 +142,6 @@ class SettingsViewController: UIViewController {
         datePicker.maximumDate = pstDate
     }
     
-    private func formatDate(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        
-        return dateFormatter.string(from: date)
-    }
-    
     private func addGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(
             target: self,

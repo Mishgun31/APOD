@@ -14,6 +14,12 @@ enum RequestType {
     case rangeDatesRequest(startDate: String, endDate: String)
 }
 
+protocol Cancellable {
+    func cancel()
+}
+
+extension URLSessionTask: Cancellable {}
+
 class Networker {
     
     static let shared = Networker()
@@ -61,8 +67,8 @@ class Networker {
         }.resume()
     }
     
-    func fetchImage(with url: URL, completion: @escaping (Data, URLResponse) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
+    func fetchImage(with url: URL, completion: @escaping (Data, URLResponse) -> Void) -> Cancellable {
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, let response = response else {
                 print(error?.localizedDescription ?? "No error description")
                 return
@@ -73,8 +79,13 @@ class Networker {
             DispatchQueue.main.async {
                 completion(data, response)
             }
-        }.resume()
+        }
+        dataTask.resume()
+        
+        return dataTask
     }
+    
+    // MARK: - Private methods
     
     private func createURL(withRequestType requestType: RequestType) -> (String, Bool) {
         var urlString = ""

@@ -13,17 +13,26 @@ class CacheManager {
     
     private init() {}
     
-    func getImage(with url: String, comletion: @escaping (UIImage?) -> Void) {
-        guard let imageUrl = URL(string: url) else { return }
+    func getImage(with url: String, completion: @escaping (Data) -> Void) -> Cancellable? {
+        guard let imageUrl = URL(string: url) else { return nil }
         
         if let cachedImageData = getFromCache(with: imageUrl) {
-            comletion(UIImage(data: cachedImageData))
+            completion(cachedImageData)
         } else {
-            Networker.shared.fetchImage(with: imageUrl) { data, response in
-                comletion(UIImage(data: data))
-                self.saveToCache(data, and: response)
+            let imageRequest = Networker.shared.fetchImage(with: imageUrl) {
+                [weak self] data, response in
+                
+                DispatchQueue.main.async {
+                    completion(data)
+                }
+                
+                self?.saveToCache(data, and: response)
             }
+            
+            return imageRequest
         }
+        
+        return nil
     }
     
     private func saveToCache(_ data: Data, and response: URLResponse) {

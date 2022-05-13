@@ -40,14 +40,14 @@
                                                         <constraint firstAttribute="height" constant="200" id="Lcd-JF-iYz"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-Gu-xu2">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-Gu-xu2">
                                                     <rect key="frame" x="8" y="244.5" width="272" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.88596731424331665" green="0.8772965669631958" blue="0.96449786424636841" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="Zjr-ih-o3f" firstAttribute="top" secondItem="kfY-dA-OcK" secondAttribute="bottom" constant="8" id="DEN-v5-utm"/>
                                                 <constraint firstAttribute="trailing" secondItem="kfY-dA-OcK" secondAttribute="trailing" constant="8" id="FaY-Oi-Fd6"/>
@@ -62,6 +62,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="cM1-Hj-7PT" firstAttribute="trailing" secondItem="tot-O2-o5Q" secondAttribute="trailingMargin" id="Cmp-tp-fQv"/>
                                         <constraint firstItem="cM1-Hj-7PT" firstAttribute="top" secondItem="tot-O2-o5Q" secondAttribute="topMargin" id="VI7-n2-hVZ"/>
@@ -71,6 +72,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="astronomyImage" destination="Zjr-ih-o3f" id="hQn-fl-Pa3"/>
+                                    <outlet property="backgroundCellView" destination="cM1-Hj-7PT" id="Hew-Bw-rD3"/>
                                     <outlet property="dateLabel" destination="kfY-dA-OcK" id="3Ja-Pc-CxK"/>
                                     <outlet property="titleLabel" destination="POC-Gu-xu2" id="ZA3-fu-MUG"/>
                                 </connections>
@@ -128,6 +130,7 @@
                                                 <constraint firstItem="OPH-4V-WMb" firstAttribute="bottom" secondItem="OIh-jd-74v" secondAttribute="bottomMargin" id="YUf-Ir-mMR"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="122" id="FZ0-lH-srp">
                                         <rect key="frame" x="0.0" y="80" width="320" height="122"/>
@@ -136,17 +139,29 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d1c-9i-8St">
-                                                    <rect key="frame" x="16" y="0.0" width="288" height="122"/>
-                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Sy-Hy-A2R">
+                                                    <rect key="frame" x="16" y="6" width="288" height="110"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d1c-9i-8St">
+                                                            <rect key="frame" x="0.0" y="0.0" width="288" height="110"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="d1c-9i-8St" firstAttribute="leading" secondItem="0Sy-Hy-A2R" secondAttribute="leading" id="Puq-V7-dcJ"/>
+                                                        <constraint firstItem="d1c-9i-8St" firstAttribute="top" secondItem="0Sy-Hy-A2R" secondAttribute="top" id="SnZ-vW-7Wm"/>
+                                                        <constraint firstItem="d1c-9i-8St" firstAttribute="trailing" secondItem="0Sy-Hy-A2R" secondAttribute="trailing" id="VTz-iw-Zvh"/>
+                                                        <constraint firstAttribute="bottom" secondItem="d1c-9i-8St" secondAttribute="bottom" id="xII-LO-jqT"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="leading" secondItem="VFk-eA-pGh" secondAttribute="leadingMargin" id="6n3-Sq-fea"/>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="trailing" secondItem="VFk-eA-pGh" secondAttribute="trailingMargin" id="D0M-II-1Jr"/>
-                                                <constraint firstAttribute="bottom" secondItem="d1c-9i-8St" secondAttribute="bottom" id="s2L-fd-zlT"/>
-                                                <constraint firstItem="d1c-9i-8St" firstAttribute="top" secondItem="VFk-eA-pGh" secondAttribute="top" id="ywF-6l-0tq"/>
+                                                <constraint firstItem="0Sy-Hy-A2R" firstAttribute="top" secondItem="VFk-eA-pGh" secondAttribute="top" constant="6" id="Eq4-Bq-Nb4"/>
+                                                <constraint firstAttribute="bottom" secondItem="0Sy-Hy-A2R" secondAttribute="bottom" constant="6" id="eTR-nl-aEi"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="0Sy-Hy-A2R" secondAttribute="trailing" id="hvD-gd-Jqn"/>
+                                                <constraint firstItem="0Sy-Hy-A2R" firstAttribute="leading" secondItem="VFk-eA-pGh" secondAttribute="leadingMargin" id="lA7-KT-UdH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="83" id="EzC-E5-aw5">
                                         <rect key="frame" x="0.0" y="202" width="320" height="83"/>
@@ -169,6 +184,7 @@
                                                 <constraint firstItem="5FR-2T-2Mg" firstAttribute="top" secondItem="y1g-An-McR" secondAttribute="topMargin" id="iF4-t9-JjH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -181,6 +197,9 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="SQg-oq-B2o"/>
                     <connections>
                         <outlet property="astronomyImage" destination="d1c-9i-8St" id="2H3-Yp-eGn"/>
+                        <outlet property="backgroundImageView" destination="0Sy-Hy-A2R" id="paR-Bc-9Fp"/>
+                        <outlet property="backgroundImageViewBottomConstraint" destination="eTR-nl-aEi" id="Oii-7V-ZV7"/>
+                        <outlet property="backgroundImageViewTopConstraint" destination="Eq4-Bq-Nb4" id="c8m-1q-HIo"/>
                         <outlet property="descriptionLabel" destination="5FR-2T-2Mg" id="O0m-jQ-5Kl"/>
                         <outlet property="titleLabel" destination="OPH-4V-WMb" id="fBh-cU-1XG"/>
                     </connections>
@@ -384,6 +403,9 @@
     <resources>
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

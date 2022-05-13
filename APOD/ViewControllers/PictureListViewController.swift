@@ -16,7 +16,7 @@ class PictureListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getData()
+        loadData()
         
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
@@ -50,6 +50,13 @@ class PictureListViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            titleForHeaderInSection section: Int) -> String? {
+        section == 0
+        ? "The photo of the day"
+        : "Test header"
     }
     
     // MARK: - Table view delegate
@@ -96,13 +103,6 @@ class PictureListViewController: UITableViewController {
     
     // MARK: - Private methods
     
-    override func tableView(_ tableView: UITableView,
-                            titleForHeaderInSection section: Int) -> String? {
-        section == 0
-        ? "The photo of the day"
-        : "Test header"
-    }
-    
     private func getData(with requestType: RequestType) {
         Networker.shared.fetchData(with: requestType) { result in
             switch result {
@@ -130,9 +130,17 @@ class PictureListViewController: UITableViewController {
         }
     }
     
-    private func getData() {
+    private func loadData() {
         if let astronomyPicture = DataManager.shared.loadPicture() {
-            todayPicture = astronomyPicture
+            
+            let currentDate = formatDate(from: Date())
+            
+            if currentDate == astronomyPicture.date {
+                todayPicture = astronomyPicture
+            } else {
+                getData(with: .defaultRequest)
+            }
+            
         } else {
             getData(with: .defaultRequest)
         }

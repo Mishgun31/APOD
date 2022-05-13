@@ -13,26 +13,40 @@ class DetailedPictureTableViewController: UITableViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     @IBOutlet weak var astronomyImage: UIImageView!
+    @IBOutlet weak var backgroundImageView: UIView!
+    
+    @IBOutlet weak var backgroundImageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backgroundImageViewBottomConstraint: NSLayoutConstraint!
     
     var astronomyPicture: AstronomyPicture!
     var pictureDimension: PictureDimension!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 300
+        tableView.sectionHeaderHeight = 0
         setupLayout()
     }
     
     // MARK: - Private methods
     
     private func setupLayout() {
+        astronomyImage.layer.cornerRadius = 15
+        backgroundImageView.setupShadow(
+            radius: 5,
+            opacity: 0.5,
+            offset: CGSize(width: 1, height: 1),
+            darkModeColor: .white,
+            lightModeColor: .black
+        )
+        
         titleLabel.text = astronomyPicture.title
         descriptionLabel.text = astronomyPicture.explanation
-        astronomyImage.layer.cornerRadius = 15
         
-        CacheManager.shared.getImage(with: astronomyPicture.url ?? "") { image in
-            self.astronomyImage.image = image
+        let _ = CacheManager.shared.getImage(with: astronomyPicture.url ?? "") {
+            [weak self] imageData in
+            
+            self?.astronomyImage.image = UIImage(data: imageData)
         }
     }
 
@@ -43,7 +57,11 @@ class DetailedPictureTableViewController: UITableViewController {
         if indexPath.row == 1 {
             let margins = tableView.layoutMargins
             let cellWidth = tableView.bounds.width - margins.left - margins.right
-            return cellWidth * pictureDimension.aspectRatio
+            let cellHeight = cellWidth * pictureDimension.aspectRatio
+            + backgroundImageViewTopConstraint.constant
+            + backgroundImageViewBottomConstraint.constant
+            
+            return cellHeight
         }
         return UITableView.automaticDimension
     }
