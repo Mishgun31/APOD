@@ -126,20 +126,14 @@ class SettingsViewController: UIViewController {
         // The server is located in the USA and the new photo of the day is
         // available in US time zone
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
-        
-        dateFormatter.timeZone = TimeZone(abbreviation: "PST")
-        let currentDate = Date()
-        let pstStringDate = dateFormatter.string(from: currentDate)
-        let pstDate = dateFormatter.date(from: pstStringDate)
+        let californiaTimeZone = TimeZone(identifier: "America/Los_Angeles")
         
         let minimumDateComponents = DateComponents(year: 1995, month: 6, day: 16)
         let minimumDate = Calendar.current.date(from: minimumDateComponents)
         
+        datePicker.timeZone = californiaTimeZone
         datePicker.minimumDate = minimumDate
-        datePicker.maximumDate = pstDate
+        datePicker.maximumDate = datePicker.date
     }
     
     private func addGestureRecognizer() {

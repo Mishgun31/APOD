@@ -24,6 +24,7 @@ extension UIViewController {
     
     func formatDate(from date: Date) -> String {
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "America/Los_Angeles")
         dateFormatter.dateFormat = "YYYY-MM-dd"
         
         return dateFormatter.string(from: date)

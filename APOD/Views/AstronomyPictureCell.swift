@@ -24,14 +24,6 @@ class AstronomyPictureCell: UITableViewCell {
         imageRequest?.cancel()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        backgroundCellView.layer.shadowPath = UIBezierPath(
-            roundedRect: backgroundCellView.bounds,
-            cornerRadius: 5
-        ).cgPath
-    }
-    
     func configure(with data: AstronomyPicture?) {
         backgroundCellView.layer.cornerRadius = 15
         backgroundCellView.setupShadow(
