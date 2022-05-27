@@ -56,7 +56,7 @@ class PictureListViewController: UITableViewController {
                             titleForHeaderInSection section: Int) -> String? {
         section == 0
         ? "The photo of the day"
-        : "Test header"
+        : "Let's see other photos"
     }
     
     // MARK: - Table view delegate
@@ -112,18 +112,20 @@ class PictureListViewController: UITableViewController {
                     case .defaultRequest:
                         self.todayPicture = astronomyPicture
                         DataManager.shared.saveSingle(picture: self.todayPicture)
+                        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
                     default:
                         self.pictures?.removeAll()
                         self.pictures?.append(astronomyPicture)
                         DataManager.shared.save(pictures: self.pictures)
+                        self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
                     }
                     print("111")
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
                     self.pictures = astronomyPictures
                     DataManager.shared.save(pictures: self.pictures)
+                    self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
                     print("222")
                 }
-                self.tableView.reloadData()
             case .failure(let error):
                 print(error.localizedDescription)
             }

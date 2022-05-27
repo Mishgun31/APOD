@@ -36,7 +36,7 @@ class AstronomyPictureCell: UITableViewCell {
         
         dateLabel.text = data?.date
         titleLabel.text = data?.title
-        self.astronomyImage.image = UIImage(systemName: "photo")
+        astronomyImage.image = UIImage(systemName: "photo")
         
         imageRequest = CacheManager.shared.getImage(with: data?.url ?? "") {
             [weak self] imageData in

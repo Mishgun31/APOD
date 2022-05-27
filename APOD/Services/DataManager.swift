@@ -23,6 +23,8 @@ class DataManager {
         settingsLabelTexts
     }
     
+    // MARK: - Work with UserDefaults
+    
     func saveSingle(picture: AstronomyPicture?) {
         guard let data = try? JSONEncoder().encode(picture) else { return }
         UserDefaults.standard.set(data, forKey: "picture")
