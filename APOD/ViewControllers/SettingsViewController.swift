@@ -23,23 +23,12 @@ class SettingsViewController: UIViewController {
     var request = RequestType.defaultRequest
     private lazy var dateRange = (firstDatePicker.date, lastDatePicker.date)
     
+    private var settingsState = DataManager.shared.loadStateOfSettingsPage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        
-        setDateRestriction(for: singleDatePicker)
-        setDateRestriction(for: firstDatePicker)
-        setDateRestriction(for: lastDatePicker)
-        
+        loadStartingScreenState()
         segmentedControlAction()
-        
-        numberTextField.delegate = self
-        addGestureRecognizer()
-        numberTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
     }
     
     // MARK: - IBActions
@@ -63,6 +52,9 @@ class SettingsViewController: UIViewController {
         default:
             stepperAction()
         }
+        
+        settingsState.segmentedControlIndex = segmentedControl.selectedSegmentIndex
+        DataManager.shared.saveStateOfSettingsPage(for: settingsState)
     }
     
     @IBAction func singleDatePickerAction() {
@@ -98,7 +90,8 @@ class SettingsViewController: UIViewController {
                       andMessage: TextDescription.dateRangeWarning.rawValue)
             return
         }
-
+        
+        saveValuesOfUIElements()
         performSegue(withIdentifier: "unwind", sender: self)
     }
     
@@ -122,6 +115,21 @@ class SettingsViewController: UIViewController {
         numberTextField.text = String(format: "%.f", stepper.value)
     }
     
+    private func loadStartingScreenState() {
+        setDateRestriction(for: singleDatePicker)
+        setDateRestriction(for: firstDatePicker)
+        setDateRestriction(for: lastDatePicker)
+        
+        numberTextField.delegate = self
+        addGestureRecognizer()
+        numberTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+        setInitialValuesForUIElements()
+    }
+    
     private func setDateRestriction(for datePicker: UIDatePicker) {
         // The server is located in the USA and the new photo of the day is
         // available in US time zone
@@ -143,6 +151,37 @@ class SettingsViewController: UIViewController {
         )
         tapGestureRecognizer.cancelsTouchesInView = false
         segmentedControl.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func setInitialValuesForUIElements() {
+        segmentedControl.selectedSegmentIndex = settingsState.segmentedControlIndex
+        
+        switch settingsState.segmentedControlIndex {
+        case 0:
+            singleDatePicker.date = settingsState.singleDate ?? singleDatePicker.date
+        case 1:
+            firstDatePicker.date = settingsState.rangeFirstDate ?? firstDatePicker.date
+            lastDatePicker.date = settingsState.rangeLastDate ?? lastDatePicker.date
+        default:
+            stepper.value = settingsState.numberOfRandomPictures ?? stepper.value
+        }
+    }
+    
+    private func saveValuesOfUIElements() {
+        settingsState = SettingsState()
+        settingsState.segmentedControlIndex = segmentedControl.selectedSegmentIndex
+        
+        switch settingsState.segmentedControlIndex {
+        case 0:
+            settingsState.singleDate = singleDatePicker.date
+        case 1:
+            settingsState.rangeFirstDate = firstDatePicker.date
+            settingsState.rangeLastDate = lastDatePicker.date
+        default:
+            settingsState.numberOfRandomPictures = stepper.value
+        }
+        
+        DataManager.shared.saveStateOfSettingsPage(for: settingsState)
     }
 }
 

@@ -18,6 +18,7 @@
 		7426B615276EDE55005C95D5 /* Networker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7426B614276EDE55005C95D5 /* Networker.swift */; };
 		74464DD127A6D51200827F97 /* DetailedPictureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74464DD027A6D51200827F97 /* DetailedPictureTableViewController.swift */; };
 		744BF7E3279542C700986A62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744BF7E2279542C700986A62 /* SettingsViewController.swift */; };
+		745F3EE72846981C00D0F514 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745F3EE62846981C00D0F514 /* SettingsState.swift */; };
 		746761EE27C00F7200918A9E /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746761ED27C00F7200918A9E /* Extension + UIViewController.swift */; };
 		74725FC5281C54E0009B85CE /* Extension + UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74725FC4281C54E0009B85CE /* Extension + UIView.swift */; };
 		748C256D27982EA200992035 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C256C27982EA200992035 /* DataManager.swift */; };
@@ -38,6 +39,7 @@
 		7426B614276EDE55005C95D5 /* Networker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networker.swift; sourceTree = "<group>"; };
 		74464DD027A6D51200827F97 /* DetailedPictureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPictureTableViewController.swift; sourceTree = "<group>"; };
 		744BF7E2279542C700986A62 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		745F3EE62846981C00D0F514 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		746761ED27C00F7200918A9E /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
 		74725FC4281C54E0009B85CE /* Extension + UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIView.swift"; sourceTree = "<group>"; };
 		748C256C27982EA200992035 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				7426B60E276D4A0A005C95D5 /* AstronomyPicture.swift */,
+				745F3EE62846981C00D0F514 /* SettingsState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				7426B60B276D48D9005C95D5 /* PictureListViewController.swift in Sources */,
 				7426B60F276D4A0A005C95D5 /* AstronomyPicture.swift in Sources */,
 				7426B5F6276D47BA005C95D5 /* AppDelegate.swift in Sources */,
+				745F3EE72846981C00D0F514 /* SettingsState.swift in Sources */,
 				74464DD127A6D51200827F97 /* DetailedPictureTableViewController.swift in Sources */,
 				7426B5F8276D47BA005C95D5 /* SceneDelegate.swift in Sources */,
 				7426B615276EDE55005C95D5 /* Networker.swift in Sources */,

@@ -12,9 +12,9 @@ class DataManager {
     static let shared = DataManager()
     
     private let settingsLabelTexts = [
-        "There will be some text for Label One here",
-        "There will be some text for Label Two here",
-        "There will be some text for Label Three here"
+        "Pick the date in order to see the photo of that day",
+        "Set a range of dates in order to see photos of that period",
+        "Set a number of random photos"
     ]
     
     private init() {}
@@ -22,9 +22,11 @@ class DataManager {
     func getSettingsLabelTexts() -> [String] {
         settingsLabelTexts
     }
+}
     
-    // MARK: - Work with UserDefaults
-    
+// MARK: - Work with UserDefaults
+
+extension DataManager {
     func saveSingle(picture: AstronomyPicture?) {
         guard let data = try? JSONEncoder().encode(picture) else { return }
         UserDefaults.standard.set(data, forKey: "picture")
@@ -52,6 +54,20 @@ class DataManager {
         }
         return astronomyPicture
     }
+    
+    func saveStateOfSettingsPage(for object: SettingsState) {
+        guard let data = try? JSONEncoder().encode(object) else { return }
+        UserDefaults.standard.set(data, forKey: "settingsState")
+    }
+    
+    func loadStateOfSettingsPage() -> SettingsState {
+        guard let data = UserDefaults.standard.object(forKey: "settingsState")
+                as? Data else { return SettingsState()}
+        guard let settingsState = try? JSONDecoder().decode(SettingsState.self, from: data) else {
+            return SettingsState()
+        }
+        return settingsState
+    }
 }
 
 // MARK: - Text description enum
@@ -59,6 +75,8 @@ class DataManager {
 enum TextDescription: String {
     case help = "There will be some description text here one"
     case appInfo = "There will be some description text here two"
-    case dateRangeWarning = "There will be some description text here three"
-    case randomPicturesWarning = "There will be some description text here four"
+    case dateRangeWarning = """
+    The starting date mustn't be earlier than June 16, 1995.
+    """
+    case randomPicturesWarning = "The number must be from 1 to 50"
 }
