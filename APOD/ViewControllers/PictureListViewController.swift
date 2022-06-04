@@ -13,18 +13,31 @@ class PictureListViewController: UITableViewController {
     private var pictures: [AstronomyPicture]?
     
     private var pictureDimension = PictureDimension(height: 0, width: 0)
-
+    
+    private var lastUserRequest: RequestType = .defaultRequest
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
-        
+        tableView.register(UINib(nibName: "CustomHeaderView", bundle: nil),
+            forHeaderFooterViewReuseIdentifier: "CustomHeaderView"
+        )
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = 30
+        tableView.sectionHeaderHeight = 25
+        loadData()
     }
+    
+    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
+        getData(with: .defaultRequest)
+        getData(with: lastUserRequest)
+        sender.endRefreshing()
+    }
+}
+    
+// MARK: - Table view data source
 
-    // MARK: - Table view data source
-
+extension PictureListViewController {
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -53,13 +66,27 @@ class PictureListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView,
-                            titleForHeaderInSection section: Int) -> String? {
-        section == 0
-        ? "The photo of the day"
-        : "Let's see other photos"
+                            viewForHeaderInSection section: Int) -> UIView? {
+        
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: "CustomHeaderView"
+        ) as? CustomHeaderView else { return nil }
+        
+        headerView.activityIndicatorView.hidesWhenStopped = true
+        
+        if section == 0 {
+            headerView.labelView.text = "The photo of the day"
+        } else {
+            headerView.labelView.text = "Let's see other photos"
+        }
+        
+        return headerView
     }
+}
     
-    // MARK: - Table view delegate
+// MARK: - Table view delegate
+
+extension PictureListViewController {
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
@@ -77,15 +104,18 @@ class PictureListViewController: UITableViewController {
         performSegue(withIdentifier: "DetailedPictureVCSegue",
                      sender: indexPath)
     }
+}
     
-    // MARK: - Navigation
+// MARK: - Navigation
 
+extension PictureListViewController {
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailedPictureVC = segue.destination
                 as? DetailedPictureTableViewController else { return }
         
         guard let indexPath = sender as? IndexPath else { return }
-
+        
         switch indexPath.section {
         case 0:
             detailedPictureVC.astronomyPicture = todayPicture
@@ -98,35 +128,45 @@ class PictureListViewController: UITableViewController {
     
     @IBAction func unwind(for segue: UIStoryboardSegue) {
         guard let settingVC = segue.source as? SettingsViewController else { return }
+        pictures?.removeAll()
         getData(with: settingVC.request)
+        tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+        animateHeaderSpinner(forSection: 1)
+        lastUserRequest = settingVC.request
     }
-    
-    // MARK: - Private methods
+}
+
+// MARK: - Private methods
+
+extension PictureListViewController {
     
     private func getData(with requestType: RequestType) {
         Networker.shared.fetchData(with: requestType) { result in
             switch result {
             case .success(let astronomyPictureObject):
                 if let astronomyPicture = astronomyPictureObject as? AstronomyPicture {
+                    
                     switch requestType {
                     case .defaultRequest:
                         self.todayPicture = astronomyPicture
-                        DataManager.shared.saveSingle(picture: self.todayPicture)
                         self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                        DataManager.shared.saveSingle(picture: self.todayPicture)
                     default:
-                        self.pictures?.removeAll()
                         self.pictures?.append(astronomyPicture)
-                        DataManager.shared.save(pictures: self.pictures)
                         self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                        DataManager.shared.save(pictures: self.pictures)
                     }
                     print("111")
+                    
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
                     self.pictures = astronomyPictures
-                    DataManager.shared.save(pictures: self.pictures)
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                    DataManager.shared.save(pictures: self.pictures)
                     print("222")
                 }
+                
             case .failure(let error):
+                self.showAlert(withTitle: "Error", andMessage: "Somthing went wrong")
                 print(error.localizedDescription)
             }
         }
@@ -152,5 +192,11 @@ class PictureListViewController: UITableViewController {
         } else {
             getData(with: .randomObjectsRequest(numberOfObjects: 10))
         }
+    }
+    
+    private func animateHeaderSpinner(forSection section: Int) {
+        guard let headerView = tableView.headerView(forSection: section)
+                as? CustomHeaderView else { return }
+        headerView.activityIndicatorView.startAnimating()
     }
 }

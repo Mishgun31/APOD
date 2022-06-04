@@ -30,8 +30,11 @@ class SettingsViewController: UIViewController {
         loadStartingScreenState()
         segmentedControlAction()
     }
+}
     
-    // MARK: - IBActions
+// MARK: - IBActions
+
+extension SettingsViewController {
     
     @IBAction func helpButtonPressed(_ sender: UIBarButtonItem) {
         showAlert(withTitle: "Help", andMessage: TextDescription.help.rawValue)
@@ -54,7 +57,6 @@ class SettingsViewController: UIViewController {
         }
         
         settingsState.segmentedControlIndex = segmentedControl.selectedSegmentIndex
-        DataManager.shared.saveStateOfSettingsPage(for: settingsState)
     }
     
     @IBAction func singleDatePickerAction() {
@@ -68,13 +70,13 @@ class SettingsViewController: UIViewController {
         } else {
             dateRange.1 = sender.date
         }
-
+        
         let stringFirstDate = formatDate(from: dateRange.0)
         let stringSecondDate = formatDate(from: dateRange.1)
         request = .rangeDatesRequest(startDate: stringFirstDate,
                                      endDate: stringSecondDate)
     }
-     
+    
     @IBAction func stepperAction() {
         if numberTextField.text == "" {
             stepper.value = 1
@@ -94,8 +96,11 @@ class SettingsViewController: UIViewController {
         saveValuesOfUIElements()
         performSegue(withIdentifier: "unwind", sender: self)
     }
-    
-    // MARK: - Private methods
+}
+
+// MARK: - Private methods
+
+extension SettingsViewController {
     
     private func setupUI() {
         for stackView in stackViewCollection {
@@ -188,6 +193,7 @@ class SettingsViewController: UIViewController {
 // MARK: - UITextFieldDelegate, Working with keyboard
 
 extension SettingsViewController: UITextFieldDelegate {
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)

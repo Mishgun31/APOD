@@ -25,6 +25,19 @@ class AstronomyPictureCell: UITableViewCell {
     }
     
     func configure(with data: AstronomyPicture?) {
+        setupAppearance()
+        astronomyImage.image = UIImage(systemName: "photo")
+        dateLabel.text = data?.date
+        titleLabel.text = data?.title
+        
+        imageRequest = CacheManager.shared.getImage(with: data?.url ?? "") {
+            [weak self] imageData in
+            
+            self?.astronomyImage.image = UIImage(data: imageData)
+        }
+    }
+    
+    private func setupAppearance() {
         backgroundCellView.layer.cornerRadius = 15
         backgroundCellView.setupShadow(
             radius: 5,
@@ -33,15 +46,5 @@ class AstronomyPictureCell: UITableViewCell {
             darkModeColor: .white,
             lightModeColor: .black
         )
-        
-        dateLabel.text = data?.date
-        titleLabel.text = data?.title
-        astronomyImage.image = UIImage(systemName: "photo")
-        
-        imageRequest = CacheManager.shared.getImage(with: data?.url ?? "") {
-            [weak self] imageData in
-            
-            self?.astronomyImage.image = UIImage(data: imageData)
-        }
     }
 }
