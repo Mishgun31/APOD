@@ -14,6 +14,44 @@ enum RequestType {
     case rangeDatesRequest(startDate: String, endDate: String)
 }
 
+enum ConnectionError {
+    case connectionUnavailable
+    case serverError
+    case unknownError
+    
+    static func checkError(with statusCode: Int) -> ConnectionError {
+        switch statusCode {
+        case 500 ..< 600:
+            return .serverError
+        default:
+            return .unknownError
+        }
+    }
+}
+    
+extension ConnectionError: LocalizedError {
+    
+    var errorDescription: String? {
+        switch self {
+        case .connectionUnavailable:
+            return NSLocalizedString(
+                "Check your internet connection and try one more time",
+                comment: ""
+            )
+        case .serverError:
+            return NSLocalizedString(
+                "Server is unavailable. Please, try later",
+                comment: ""
+            )
+        case .unknownError:
+            return NSLocalizedString(
+                "Something went wrong. Please, try later",
+                comment: ""
+            )
+        }
+    }
+}
+
 protocol Cancellable {
     func cancel()
 }
@@ -33,12 +71,34 @@ class Networker {
     func fetchData(with requestType: RequestType,
                    completion: @escaping (Result<Any, Error>) -> Void) {
         
+        guard NetworkMonitor.shared.isConnected else {
+            let error = ConnectionError.connectionUnavailable
+            DispatchQueue.main.async {
+                completion(.failure(error))
+            }
+            print(error.localizedDescription)
+            return
+        }
+        
         let (urlStirng, isExpectArray) = createURL(withRequestType: requestType)
         guard let url = URL(string: urlStirng) else { return }
         
         URLSession.shared.dataTask(with: url) { data, urlResponse, error in
-            guard let data = data, let _ = urlResponse else {
-                print(error?.localizedDescription ?? "No description")
+            guard let data = data else {
+                
+                if let response = urlResponse as? HTTPURLResponse {
+                    let error = ConnectionError.checkError(with: response.statusCode)
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                    print("Status code: \(response.statusCode)")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    completion(.failure(ConnectionError.unknownError))
+                }
+                print(error?.localizedDescription ?? "Fetch data error. No description")
                 return
             }
             
@@ -61,8 +121,9 @@ class Networker {
                 }
             } catch let error {
                 DispatchQueue.main.async {
-                    completion(.failure(error))
+                    completion(.failure(ConnectionError.unknownError))
                 }
+                print(error.localizedDescription)
             }
         }.resume()
     }
@@ -70,7 +131,7 @@ class Networker {
     func fetchImage(with url: URL, completion: @escaping (Data, URLResponse) -> Void) -> Cancellable {
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, let response = response else {
-                print(error?.localizedDescription ?? "No error description")
+                print(error?.localizedDescription ?? "Fetch image error. No description")
                 return
             }
             

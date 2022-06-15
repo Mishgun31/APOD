@@ -14,11 +14,14 @@ class PictureListViewController: UITableViewController {
     
     private var pictureDimension = PictureDimension(height: 0, width: 0)
     
-    private var lastUserRequest: RequestType = .defaultRequest
+    private var lastUserRequest: RequestType = .randomObjectsRequest(numberOfObjects: 10)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "CustomHeaderView", bundle: nil),
+        NetworkMonitor.shared.startMonitoring()
+        
+        tableView.register(
+            UINib(nibName: "CustomHeaderView", bundle: nil),
             forHeaderFooterViewReuseIdentifier: "CustomHeaderView"
         )
         tableView.estimatedRowHeight = 300
@@ -28,6 +31,8 @@ class PictureListViewController: UITableViewController {
     }
     
     @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
+        animateHeaderSpinner(forSection: 0, true)
+        animateHeaderSpinner(forSection: 1, true)
         getData(with: .defaultRequest)
         getData(with: lastUserRequest)
         sender.endRefreshing()
@@ -49,6 +54,7 @@ extension PictureListViewController {
 
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "cell",
             for: indexPath
@@ -56,11 +62,9 @@ extension PictureListViewController {
             return UITableViewCell()
         }
         
-        if indexPath.section == 0 {
-            cell.configure(with: todayPicture)
-        } else {
-            cell.configure(with: pictures?[indexPath.row])
-        }
+        indexPath.section == 0
+        ? cell.configure(with: todayPicture)
+        : cell.configure(with: pictures?[indexPath.row])
         
         return cell
     }
@@ -72,13 +76,9 @@ extension PictureListViewController {
             withIdentifier: "CustomHeaderView"
         ) as? CustomHeaderView else { return nil }
         
-        headerView.activityIndicatorView.hidesWhenStopped = true
-        
-        if section == 0 {
-            headerView.labelView.text = "The photo of the day"
-        } else {
-            headerView.labelView.text = "Let's see other photos"
-        }
+        section == 0
+        ? headerView.configure(with: "The photo of the day")
+        : headerView.configure(with: "Let's see other photos")
         
         return headerView
     }
@@ -129,9 +129,9 @@ extension PictureListViewController {
     @IBAction func unwind(for segue: UIStoryboardSegue) {
         guard let settingVC = segue.source as? SettingsViewController else { return }
         pictures?.removeAll()
-        getData(with: settingVC.request)
         tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-        animateHeaderSpinner(forSection: 1)
+        animateHeaderSpinner(forSection: 1, true)
+        getData(with: settingVC.request)
         lastUserRequest = settingVC.request
     }
 }
@@ -150,24 +150,31 @@ extension PictureListViewController {
                     case .defaultRequest:
                         self.todayPicture = astronomyPicture
                         self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                        self.animateHeaderSpinner(forSection: 0, false)
                         DataManager.shared.saveSingle(picture: self.todayPicture)
                     default:
+                        self.pictures?.removeAll()
                         self.pictures?.append(astronomyPicture)
                         self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                        self.animateHeaderSpinner(forSection: 1, false)
                         DataManager.shared.save(pictures: self.pictures)
                     }
-                    print("111")
+                    print("Request for single object succed")
                     
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
                     self.pictures = astronomyPictures
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                    self.animateHeaderSpinner(forSection: 1, false)
                     DataManager.shared.save(pictures: self.pictures)
-                    print("222")
+                    print("Request for array of objects succed")
                 }
                 
             case .failure(let error):
-                self.showAlert(withTitle: "Error", andMessage: "Somthing went wrong")
-                print(error.localizedDescription)
+                let error = error as? ConnectionError
+                self.animateHeaderSpinner(forSection: 0, false)
+                self.animateHeaderSpinner(forSection: 1, false)
+                self.showAlert(withTitle: "Error",
+                               andMessage: error?.localizedDescription ?? "")
             }
         }
     }
@@ -194,9 +201,12 @@ extension PictureListViewController {
         }
     }
     
-    private func animateHeaderSpinner(forSection section: Int) {
+    private func animateHeaderSpinner(forSection section: Int, _ animate: Bool) {
         guard let headerView = tableView.headerView(forSection: section)
                 as? CustomHeaderView else { return }
-        headerView.activityIndicatorView.startAnimating()
+        
+        animate
+        ? headerView.activityIndicatorView.startAnimating()
+        : headerView.activityIndicatorView.stopAnimating()
     }
 }
