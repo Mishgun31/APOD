@@ -13,6 +13,7 @@ class AstronomyPictureCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var astronomyImage: UIImageView!
+    @IBOutlet weak var videoIconImage: UIImageView!
     
     @IBOutlet weak var backgroundCellView: UIView!
     
@@ -21,6 +22,7 @@ class AstronomyPictureCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         astronomyImage.image = nil
+        videoIconImage.isHidden = true
         imageRequest?.cancel()
     }
     
@@ -30,7 +32,14 @@ class AstronomyPictureCell: UITableViewCell {
         dateLabel.text = data?.date
         titleLabel.text = data?.title
         
-        imageRequest = CacheManager.shared.getImage(with: data?.url ?? "") {
+        var imageUrl = data?.url
+        
+        if data?.thumbnailUrl != nil {
+            imageUrl = data?.thumbnailUrl
+            videoIconImage.isHidden = false
+        }
+        
+        imageRequest = CacheManager.shared.getImage(with: imageUrl ?? "") {
             [weak self] imageData in
             
             self?.astronomyImage.image = UIImage(data: imageData)

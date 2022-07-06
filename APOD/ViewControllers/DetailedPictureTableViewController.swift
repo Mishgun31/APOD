@@ -5,7 +5,7 @@
 //  Created by Михаил Мезенцев on 30.01.2022.
 //
 
-import UIKit
+import youtube_ios_player_helper
 
 class DetailedPictureTableViewController: UITableViewController {
     
@@ -14,6 +14,7 @@ class DetailedPictureTableViewController: UITableViewController {
     
     @IBOutlet weak var astronomyImage: UIImageView!
     @IBOutlet weak var backgroundImageView: UIView!
+    @IBOutlet weak var playerView: YTPlayerView!
     
     @IBOutlet weak var backgroundImageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var backgroundImageViewBottomConstraint: NSLayoutConstraint!
@@ -31,30 +32,54 @@ class DetailedPictureTableViewController: UITableViewController {
     // MARK: - Private methods
     
     private func setupLayout() {
-        astronomyImage.layer.cornerRadius = 15
-        backgroundImageView.setupShadow(
-            radius: 5,
-            opacity: 0.5,
-            offset: CGSize(width: 1, height: 1),
-            darkModeColor: .white,
-            lightModeColor: .black
-        )
+        
+        if astronomyPicture.thumbnailUrl != nil {
+            playerView.isHidden = false
+            backgroundImageView.isHidden = true
+            
+            if let videoUrl = astronomyPicture.url {
+                let videoID = extractVideID(from: videoUrl)
+                playerView.load(withVideoId: videoID)
+            }
+            
+        } else {
+            astronomyImage.layer.cornerRadius = 15
+            backgroundImageView.setupShadow(
+                radius: 5,
+                opacity: 0.5,
+                offset: CGSize(width: 1, height: 1),
+                darkModeColor: .white,
+                lightModeColor: .black
+            )
+            
+            let _ = CacheManager.shared.getImage(with: astronomyPicture.url ?? "") {
+                [weak self] imageData in
+                
+                self?.astronomyImage.image = UIImage(data: imageData)
+            }
+        }
         
         titleLabel.text = astronomyPicture.title
         descriptionLabel.text = astronomyPicture.explanation
+    }
+    
+    private func extractVideID(from url: String) -> String {
+        let urlComponents = url.split(separator: "/").map(String.init)
+        guard let videoID = urlComponents.last else { return "" }
         
-        let _ = CacheManager.shared.getImage(with: astronomyPicture.url ?? "") {
-            [weak self] imageData in
-            
-            self?.astronomyImage.image = UIImage(data: imageData)
-        }
+        return videoID
     }
 
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView,
                             heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 1 {
+        
+        if astronomyPicture.thumbnailUrl != nil, indexPath.row == 1 {
+            return playerView.bounds.width / (4.0 / 3.0)
+        }
+        
+        if astronomyPicture.thumbnailUrl == nil, indexPath.row == 1 {
             let margins = tableView.layoutMargins
             let cellWidth = tableView.bounds.width - margins.left - margins.right
             let cellHeight = cellWidth * pictureDimension.aspectRatio

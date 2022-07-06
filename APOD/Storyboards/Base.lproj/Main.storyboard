@@ -46,19 +46,26 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="play.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qAm-sR-Knr">
+                                                    <rect key="frame" x="8" y="9" width="24" height="18"/>
+                                                    <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                             <constraints>
+                                                <constraint firstItem="Zjr-ih-o3f" firstAttribute="top" secondItem="qAm-sR-Knr" secondAttribute="bottom" constant="8" id="6ls-J0-nGb"/>
                                                 <constraint firstItem="Zjr-ih-o3f" firstAttribute="top" secondItem="kfY-dA-OcK" secondAttribute="bottom" constant="8" id="DEN-v5-utm"/>
                                                 <constraint firstAttribute="trailing" secondItem="kfY-dA-OcK" secondAttribute="trailing" constant="8" id="FaY-Oi-Fd6"/>
                                                 <constraint firstItem="Zjr-ih-o3f" firstAttribute="leading" secondItem="cM1-Hj-7PT" secondAttribute="leading" constant="8" id="IG2-S6-G2u"/>
                                                 <constraint firstItem="POC-Gu-xu2" firstAttribute="leading" secondItem="cM1-Hj-7PT" secondAttribute="leading" constant="8" id="MgM-LN-6Ek"/>
+                                                <constraint firstItem="qAm-sR-Knr" firstAttribute="top" secondItem="cM1-Hj-7PT" secondAttribute="top" constant="8" id="RR0-5G-nXp"/>
                                                 <constraint firstAttribute="trailing" secondItem="Zjr-ih-o3f" secondAttribute="trailing" constant="8" id="ThA-3b-zRL"/>
                                                 <constraint firstAttribute="trailing" secondItem="POC-Gu-xu2" secondAttribute="trailing" constant="8" id="ccb-YM-Lfu"/>
                                                 <constraint firstItem="kfY-dA-OcK" firstAttribute="leading" secondItem="cM1-Hj-7PT" secondAttribute="leading" constant="8" id="dnp-ac-mbe"/>
                                                 <constraint firstItem="POC-Gu-xu2" firstAttribute="top" secondItem="Zjr-ih-o3f" secondAttribute="bottom" constant="8" id="rsC-nI-Rik"/>
                                                 <constraint firstItem="kfY-dA-OcK" firstAttribute="top" secondItem="cM1-Hj-7PT" secondAttribute="top" constant="8" id="t7e-ez-sQb"/>
                                                 <constraint firstAttribute="bottom" secondItem="POC-Gu-xu2" secondAttribute="bottom" constant="8" id="y3I-nG-HO0"/>
+                                                <constraint firstItem="qAm-sR-Knr" firstAttribute="leading" secondItem="cM1-Hj-7PT" secondAttribute="leading" constant="8" id="yw1-8f-wWB"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -75,6 +82,7 @@
                                     <outlet property="backgroundCellView" destination="cM1-Hj-7PT" id="Hew-Bw-rD3"/>
                                     <outlet property="dateLabel" destination="kfY-dA-OcK" id="3Ja-Pc-CxK"/>
                                     <outlet property="titleLabel" destination="POC-Gu-xu2" id="ZA3-fu-MUG"/>
+                                    <outlet property="videoIconImage" destination="qAm-sR-Knr" id="awQ-cr-DEs"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -147,6 +155,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ju-0o-fmw" customClass="YTPlayerView">
+                                                    <rect key="frame" x="16" y="6" width="288" height="110"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Sy-Hy-A2R">
                                                     <rect key="frame" x="16" y="6" width="288" height="110"/>
                                                     <subviews>
@@ -163,10 +175,14 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="4ju-0o-fmw" secondAttribute="trailing" constant="16" id="585-SS-j5c"/>
+                                                <constraint firstItem="4ju-0o-fmw" firstAttribute="top" secondItem="VFk-eA-pGh" secondAttribute="top" constant="6" id="7GY-jY-fMu"/>
                                                 <constraint firstItem="0Sy-Hy-A2R" firstAttribute="top" secondItem="VFk-eA-pGh" secondAttribute="top" constant="6" id="Eq4-Bq-Nb4"/>
+                                                <constraint firstAttribute="bottom" secondItem="4ju-0o-fmw" secondAttribute="bottom" constant="6" id="H2v-aQ-d8u"/>
                                                 <constraint firstAttribute="bottom" secondItem="0Sy-Hy-A2R" secondAttribute="bottom" constant="6" id="eTR-nl-aEi"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="0Sy-Hy-A2R" secondAttribute="trailing" id="hvD-gd-Jqn"/>
                                                 <constraint firstItem="0Sy-Hy-A2R" firstAttribute="leading" secondItem="VFk-eA-pGh" secondAttribute="leadingMargin" id="lA7-KT-UdH"/>
+                                                <constraint firstItem="4ju-0o-fmw" firstAttribute="leading" secondItem="VFk-eA-pGh" secondAttribute="leading" constant="16" id="xli-SQ-WSu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -209,6 +225,7 @@
                         <outlet property="backgroundImageViewBottomConstraint" destination="eTR-nl-aEi" id="Oii-7V-ZV7"/>
                         <outlet property="backgroundImageViewTopConstraint" destination="Eq4-Bq-Nb4" id="c8m-1q-HIo"/>
                         <outlet property="descriptionLabel" destination="5FR-2T-2Mg" id="O0m-jQ-5Kl"/>
+                        <outlet property="playerView" destination="4ju-0o-fmw" id="h6I-Wt-Z8R"/>
                         <outlet property="titleLabel" destination="OPH-4V-WMb" id="fBh-cU-1XG"/>
                     </connections>
                 </tableViewController>
@@ -409,8 +426,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="play.rectangle" catalog="system" width="128" height="93"/>
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

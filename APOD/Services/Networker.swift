@@ -62,7 +62,7 @@ class Networker {
     
     static let shared = Networker()
     
-    private let query = "https://api.nasa.gov/planetary/apod?api_key=hmCWwn6l2SmCAbSzNnbeYOSQIPGZwh0CLJ1NCm1G"
+    private let query = "https://api.nasa.gov/planetary/apod?api_key=hmCWwn6l2SmCAbSzNnbeYOSQIPGZwh0CLJ1NCm1G&thumbs=true"
     
     private init() {}
     
