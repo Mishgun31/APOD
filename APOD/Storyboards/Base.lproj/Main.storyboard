@@ -29,25 +29,25 @@
                                             <rect key="frame" x="16" y="11" width="288" height="284"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfY-dA-OcK">
-                                                    <rect key="frame" x="8" y="8" width="272" height="20.5"/>
+                                                    <rect key="frame" x="8" y="8" width="272" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zjr-ih-o3f">
-                                                    <rect key="frame" x="8" y="36.5" width="272" height="200"/>
+                                                    <rect key="frame" x="8" y="37" width="272" height="200"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="200" id="Lcd-JF-iYz"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POC-Gu-xu2">
-                                                    <rect key="frame" x="8" y="244.5" width="272" height="31.5"/>
+                                                    <rect key="frame" x="8" y="245" width="272" height="31"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="play.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qAm-sR-Knr">
-                                                    <rect key="frame" x="8" y="9" width="24" height="18"/>
+                                                    <rect key="frame" x="8" y="9" width="24" height="18.5"/>
                                                     <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                 </imageView>
                                             </subviews>
@@ -118,7 +118,7 @@
         <scene sceneID="87w-yX-Fii">
             <objects>
                 <tableViewController id="Hdl-5E-okd" customClass="DetailedPictureTableViewController" customModule="APOD" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="mYM-1p-KG8">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="mYM-1p-KG8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -227,11 +227,28 @@
                         <outlet property="descriptionLabel" destination="5FR-2T-2Mg" id="O0m-jQ-5Kl"/>
                         <outlet property="playerView" destination="4ju-0o-fmw" id="h6I-Wt-Z8R"/>
                         <outlet property="titleLabel" destination="OPH-4V-WMb" id="fBh-cU-1XG"/>
+                        <segue destination="XCH-eY-kWg" kind="show" identifier="FullScreenImageVCSegue" id="WNL-fh-xzl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DVB-JB-7Q2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1612.5" y="165.8450704225352"/>
+        </scene>
+        <!--Full Screen Image View Controller-->
+        <scene sceneID="i1D-uW-vsB">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="XCH-eY-kWg" customClass="FullScreenImageViewController" customModule="APOD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qvn-wo-HOe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="2dl-KH-D78"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="vTm-Ia-tzD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rAt-GA-ou2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2482.5" y="166.90140845070422"/>
         </scene>
         <!--Settings-->
         <scene sceneID="vPu-gE-vKN">
@@ -259,10 +276,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6M2-dQ-qCE">
-                                <rect key="frame" x="16" y="155.5" width="288" height="290"/>
+                                <rect key="frame" x="16" y="155.5" width="288" height="329.5"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="y9J-nt-BfX">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="290"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="329.5"/>
                                         <connections>
                                             <action selector="singleDatePickerAction" destination="GuG-BA-id5" eventType="valueChanged" id="CJe-bk-Fbe"/>
                                         </connections>
