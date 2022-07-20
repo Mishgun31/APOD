@@ -9,7 +9,16 @@ import UIKit
 
 class ImageScrollView: UIScrollView {
     
-    private var imageZoomView: UIImageView!
+    private(set) var imageZoomView: ZoomableImageView!
+    
+    lazy private var zoomingTap: UITapGestureRecognizer = {
+        let zoomingTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleZoomingTap)
+        )
+        zoomingTap.numberOfTapsRequired = 2
+        return zoomingTap
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,14 +32,21 @@ class ImageScrollView: UIScrollView {
     }
     
     func set(image: UIImage) {
-        imageZoomView = UIImageView(image: image)
+        imageZoomView = ZoomableImageView(image: image)
         addSubview(imageZoomView)
         configureFor(imageSize: image.size)
+    }
+    
+    @objc private func handleZoomingTap(sender: UITapGestureRecognizer) {
+        let location = sender.location(in: sender.view)
+        zoom(atPoint: location, animated: true)
     }
     
     private func configureFor(imageSize: CGSize) {
         contentSize = imageSize
         updateMinZoomScale()
+        imageZoomView.addGestureRecognizer(zoomingTap)
+        imageZoomView.isUserInteractionEnabled = true
     }
     
     private func updateMinZoomScale() {
@@ -56,6 +72,27 @@ class ImageScrollView: UIScrollView {
         imageFrame.origin.y = yOffset
         
         imageZoomView.frame = imageFrame
+    }
+    
+    private func zoom(atPoint point: CGPoint, animated: Bool) {
+        let newScale = (zoomScale == minimumZoomScale)
+        ? maximumZoomScale
+        : minimumZoomScale
+        
+        let zoomRect = zoomRect(scale: newScale, center: point)
+        zoom(to: zoomRect, animated: animated)
+    }
+    
+    private func zoomRect(scale: CGFloat, center: CGPoint) -> CGRect {
+        var zoomRect = CGRect()
+        
+        zoomRect.size.width = bounds.width / scale
+        zoomRect.size.height = bounds.height / scale
+        
+        zoomRect.origin.x = center.x - (zoomRect.size.width / 2)
+        zoomRect.origin.y = center.y - (zoomRect.size.height / 2)
+        
+        return zoomRect
     }
 }
 

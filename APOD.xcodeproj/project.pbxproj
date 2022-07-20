@@ -27,6 +27,7 @@
 		74725FC5281C54E0009B85CE /* Extension + UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74725FC4281C54E0009B85CE /* Extension + UIView.swift */; };
 		74726AE52875AE1100F743C6 /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74726AE42875AE1100F743C6 /* FullScreenImageViewController.swift */; };
 		748C256D27982EA200992035 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748C256C27982EA200992035 /* DataManager.swift */; };
+		74EBC6E42885CFB800BDB397 /* ZoomableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EBC6E32885CFB800BDB397 /* ZoomableImageView.swift */; };
 		74FCD2DF278B2FDE005B8021 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FCD2DE278B2FDE005B8021 /* CacheManager.swift */; };
 		D6BA733C2C53A7541D1A813C /* Pods_APOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C9FF80C5B9F5292D3BF09D /* Pods_APOD.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		74725FC4281C54E0009B85CE /* Extension + UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIView.swift"; sourceTree = "<group>"; };
 		74726AE42875AE1100F743C6 /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		748C256C27982EA200992035 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		74EBC6E32885CFB800BDB397 /* ZoomableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableImageView.swift; sourceTree = "<group>"; };
 		74FCD2DE278B2FDE005B8021 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		C8FCB7F315ED87F2EAA8BD65 /* Pods-APOD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APOD.release.xcconfig"; path = "Target Support Files/Pods-APOD/Pods-APOD.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,6 +162,7 @@
 				74005BB22849EA6800BB11B4 /* CustomHeaderView.swift */,
 				74005BB42849EA9700BB11B4 /* CustomHeaderView.xib */,
 				745335352876D74D0090FCC6 /* ImageScrollView.swift */,
+				74EBC6E32885CFB800BDB397 /* ZoomableImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				7426B615276EDE55005C95D5 /* Networker.swift in Sources */,
 				74005BB32849EA6800BB11B4 /* CustomHeaderView.swift in Sources */,
 				745335362876D74D0090FCC6 /* ImageScrollView.swift in Sources */,
+				74EBC6E42885CFB800BDB397 /* ZoomableImageView.swift in Sources */,
 				74FCD2DF278B2FDE005B8021 /* CacheManager.swift in Sources */,
 				74726AE52875AE1100F743C6 /* FullScreenImageViewController.swift in Sources */,
 				74725FC5281C54E0009B85CE /* Extension + UIView.swift in Sources */,
