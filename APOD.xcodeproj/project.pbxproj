@@ -474,6 +474,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = APOD/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = APOD;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "The app wants to save a photo in your photo library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -506,6 +507,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = APOD/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = APOD;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "The app wants to save a photo in your photo library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

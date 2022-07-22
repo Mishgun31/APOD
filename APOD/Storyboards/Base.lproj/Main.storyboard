@@ -244,7 +244,13 @@
                         <viewLayoutGuide key="safeArea" id="2dl-KH-D78"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vTm-Ia-tzD"/>
+                    <navigationItem key="navigationItem" id="vTm-Ia-tzD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Vnw-bN-qqP">
+                            <connections>
+                                <action selector="actionButtonPressed:" destination="XCH-eY-kWg" id="L2q-pz-HOe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rAt-GA-ou2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

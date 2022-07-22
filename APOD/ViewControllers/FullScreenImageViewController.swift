@@ -9,14 +9,26 @@ import UIKit
 
 class FullScreenImageViewController: UIViewController {
     
+    override var prefersStatusBarHidden: Bool {
+        isViewModeOn
+    }
+     
     var astronomyPicture: AstronomyPicture!
     
     private var imageScrollView: ImageScrollView!
+    
     private var isViewModeOn = false {
         didSet {
             switchViewAppearance()
         }
     }
+    
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        return activityIndicator
+    }()
     
     private lazy var singleTap: UITapGestureRecognizer = {
         let singleTap = UITapGestureRecognizer(
@@ -35,10 +47,6 @@ class FullScreenImageViewController: UIViewController {
         return doubleTap
     }()
     
-    override var prefersStatusBarHidden: Bool {
-        isViewModeOn
-    }
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -47,22 +55,29 @@ class FullScreenImageViewController: UIViewController {
         
         singleTap.delegate = self
         doubleTap.delegate = self
-        
-        imageScrollView.imageZoomView.delegate = self
     }
     
-    @objc private func handleSingleTap() {
-        isViewModeOn.toggle()
-    }
-    
-    @objc private func handleDoubleTap() {
-        isViewModeOn.toggle()
-    }
+    @IBAction func actionButtonPressed(_ sender: UIBarButtonItem) {
+        guard let photoForSharing = imageScrollView.imageZoomView.image else {
+            return
+        }
         
+        let activityController = UIActivityViewController(
+            activityItems: [photoForSharing],
+            applicationActivities: nil
+        )
+        
+        present(activityController, animated: true)
+    }
+}
+
+// MARK: - Private methods, Work with views
+
+extension FullScreenImageViewController {
+    
     private func setupViews() {
         imageScrollView = ImageScrollView(frame: view.bounds)
         view.addSubview(imageScrollView)
-        imageScrollView.set(image: UIImage(named: "photoExample") ?? UIImage())
         imageScrollView.contentInsetAdjustmentBehavior = .never
         
         imageScrollView.topAnchor.constraint(equalTo: view.topAnchor)
@@ -73,6 +88,11 @@ class FullScreenImageViewController: UIViewController {
             .isActive = true
         imageScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             .isActive = true
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.center = view.center
+        
+        loadImage()
     }
     
     private func switchViewAppearance() {
@@ -84,11 +104,37 @@ class FullScreenImageViewController: UIViewController {
             view.backgroundColor = .systemBackground
         }
     }
+    
+    private func loadImage() {
+        let hdImageUrl = astronomyPicture.hdurl ?? ""
+        
+        let _ = CacheManager.shared.getImage(with: hdImageUrl) {
+            [weak self] imageData in
+            
+            if let hdImage = UIImage(data: imageData) {
+                self?.imageScrollView.set(image: hdImage)
+            } else {
+                let systemImage = UIImage(systemName: "photo") ?? UIImage()
+                self?.imageScrollView.set(image: systemImage)
+            }
+            
+            self?.imageScrollView.imageZoomView.delegate = self
+            self?.activityIndicator.stopAnimating()
+        }
+    }
 }
 
-// MARK: - Gesture Recognizer Delegate
+// MARK: - Gesture Recognizer Delegate, Handling gestures
 
 extension FullScreenImageViewController: UIGestureRecognizerDelegate {
+    
+    @objc private func handleSingleTap() {
+        isViewModeOn.toggle()
+    }
+    
+    @objc private func handleDoubleTap() {
+        isViewModeOn.toggle()
+    }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
