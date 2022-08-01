@@ -47,6 +47,8 @@ class FullScreenImageViewController: UIViewController {
         return doubleTap
     }()
     
+    // MARK: - View Controller life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -56,6 +58,8 @@ class FullScreenImageViewController: UIViewController {
         singleTap.delegate = self
         doubleTap.delegate = self
     }
+    
+    // MARK: - IBActions
     
     @IBAction func actionButtonPressed(_ sender: UIBarButtonItem) {
         guard let photoForSharing = imageScrollView.imageZoomView.image else {
@@ -71,7 +75,7 @@ class FullScreenImageViewController: UIViewController {
     }
 }
 
-// MARK: - Private methods, Work with views
+// MARK: - Work with views
 
 extension FullScreenImageViewController {
     

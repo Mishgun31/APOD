@@ -19,7 +19,6 @@ class CustomHeaderView: UITableViewHeaderFooterView {
     }
     
     private func checkIfShouldAnimateSpinner() {
-        
         if let _ = DataManager.shared.loadPictures() {
             return
         } else {

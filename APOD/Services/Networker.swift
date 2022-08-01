@@ -7,12 +7,16 @@
 
 import Foundation
 
+// MARK: - Request Type Enum
+
 enum RequestType {
     case defaultRequest
     case chosenDateRequest(date: String)
     case randomObjectsRequest(numberOfObjects: Int)
     case rangeDatesRequest(startDate: String, endDate: String)
 }
+
+// MARK: - Connection Error Enum
 
 enum ConnectionError {
     case connectionUnavailable
@@ -52,11 +56,15 @@ extension ConnectionError: LocalizedError {
     }
 }
 
+// MARK: - Cancellable Protocol
+
 protocol Cancellable {
     func cancel()
 }
 
 extension URLSessionTask: Cancellable {}
+
+// MARK: - Neworker Class
 
 class Networker {
     
@@ -66,7 +74,32 @@ class Networker {
     
     private init() {}
     
-    // MARK: - Fetch data methods
+    private func createURL(withRequestType requestType: RequestType) -> (String, Bool) {
+        var urlString = ""
+        var isExpectArray = false
+        
+        switch requestType {
+        case .defaultRequest:
+            urlString = query
+            isExpectArray = false
+        case let .chosenDateRequest(date):
+            urlString = query + "&date=\(date)"
+            isExpectArray = false
+        case let .randomObjectsRequest(numberOfObjects):
+            urlString = query + "&count=\(numberOfObjects)"
+            isExpectArray = true
+        case let .rangeDatesRequest(startDate, endDate):
+            urlString = query + "&start_date=\(startDate)&end_date=\(endDate)"
+            isExpectArray = true
+        }
+        
+        return (urlString, isExpectArray)
+    }
+}
+    
+// MARK: - Fetch data methods
+
+extension Networker {
     
     func fetchData(with requestType: RequestType,
                    completion: @escaping (Result<Any, Error>) -> Void) {
@@ -144,29 +177,5 @@ class Networker {
         dataTask.resume()
         
         return dataTask
-    }
-    
-    // MARK: - Private methods
-    
-    private func createURL(withRequestType requestType: RequestType) -> (String, Bool) {
-        var urlString = ""
-        var isExpectArray = false
-        
-        switch requestType {
-        case .defaultRequest:
-            urlString = query
-            isExpectArray = false
-        case let .chosenDateRequest(date):
-            urlString = query + "&date=\(date)"
-            isExpectArray = false
-        case let .randomObjectsRequest(numberOfObjects):
-            urlString = query + "&count=\(numberOfObjects)"
-            isExpectArray = true
-        case let .rangeDatesRequest(startDate, endDate):
-            urlString = query + "&start_date=\(startDate)&end_date=\(endDate)"
-            isExpectArray = true
-        }
-        
-        return (urlString, isExpectArray)
     }
 }

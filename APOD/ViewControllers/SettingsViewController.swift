@@ -20,7 +20,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var stepper: UIStepper!
     
-    var request = RequestType.defaultRequest
+    private(set) var request = RequestType.defaultRequest
     private lazy var dateRange = (firstDatePicker.date, lastDatePicker.date)
     
     private var settingsState = DataManager.shared.loadStateOfSettingsPage()

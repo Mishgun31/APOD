@@ -29,14 +29,6 @@ class PictureListViewController: UITableViewController {
         tableView.sectionHeaderHeight = 25
         loadData()
     }
-    
-    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-        animateHeaderSpinner(forSection: 0, true)
-        animateHeaderSpinner(forSection: 1, true)
-        getData(with: .defaultRequest)
-        getData(with: lastUserRequest)
-        sender.endRefreshing()
-    }
 }
     
 // MARK: - Table view data source
@@ -136,44 +128,44 @@ extension PictureListViewController {
     }
 }
 
-// MARK: - Private methods
+// MARK: - Work with data
 
 extension PictureListViewController {
     
     private func getData(with requestType: RequestType) {
-        Networker.shared.fetchData(with: requestType) { result in
+        Networker.shared.fetchData(with: requestType) { [weak self] result in
             switch result {
             case .success(let astronomyPictureObject):
                 if let astronomyPicture = astronomyPictureObject as? AstronomyPicture {
                     
                     switch requestType {
                     case .defaultRequest:
-                        self.todayPicture = astronomyPicture
-                        self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-                        self.animateHeaderSpinner(forSection: 0, false)
-                        DataManager.shared.saveSingle(picture: self.todayPicture)
+                        self?.todayPicture = astronomyPicture
+                        self?.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                        self?.animateHeaderSpinner(forSection: 0, false)
+                        DataManager.shared.saveSingle(picture: self?.todayPicture)
                     default:
-                        self.pictures?.removeAll()
-                        self.pictures?.append(astronomyPicture)
-                        self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-                        self.animateHeaderSpinner(forSection: 1, false)
-                        DataManager.shared.save(pictures: self.pictures)
+                        self?.pictures?.removeAll()
+                        self?.pictures?.append(astronomyPicture)
+                        self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                        self?.animateHeaderSpinner(forSection: 1, false)
+                        DataManager.shared.save(pictures: self?.pictures)
                     }
                     print("Request for single object succed")
                     
                 } else if let astronomyPictures = astronomyPictureObject as? [AstronomyPicture] {
-                    self.pictures = astronomyPictures
-                    self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-                    self.animateHeaderSpinner(forSection: 1, false)
-                    DataManager.shared.save(pictures: self.pictures)
+                    self?.pictures = astronomyPictures
+                    self?.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                    self?.animateHeaderSpinner(forSection: 1, false)
+                    DataManager.shared.save(pictures: self?.pictures)
                     print("Request for array of objects succed")
                 }
                 
             case .failure(let error):
                 let error = error as? ConnectionError
-                self.animateHeaderSpinner(forSection: 0, false)
-                self.animateHeaderSpinner(forSection: 1, false)
-                self.showAlert(withTitle: "Error",
+                self?.animateHeaderSpinner(forSection: 0, false)
+                self?.animateHeaderSpinner(forSection: 1, false)
+                self?.showAlert(withTitle: "Error",
                                andMessage: error?.localizedDescription ?? "")
             }
         }
@@ -199,6 +191,19 @@ extension PictureListViewController {
         } else {
             getData(with: .randomObjectsRequest(numberOfObjects: 10))
         }
+    }
+}
+
+// MARK: - Activity Indicators
+
+extension PictureListViewController {
+    
+    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
+        animateHeaderSpinner(forSection: 0, true)
+        animateHeaderSpinner(forSection: 1, true)
+        getData(with: .defaultRequest)
+        getData(with: lastUserRequest)
+        sender.endRefreshing()
     }
     
     private func animateHeaderSpinner(forSection section: Int, _ animate: Bool) {

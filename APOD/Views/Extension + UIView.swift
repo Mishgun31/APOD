@@ -8,7 +8,10 @@
 import UIKit
 
 extension UIView {
-    func setColorsFor(darkMode darkColor: UIColor, lightMode lightColor: UIColor) -> UIColor {
+    
+    func setColorsFor(darkMode darkColor: UIColor,
+                      lightMode lightColor: UIColor) -> UIColor {
+        
         UIColor { traitCollection in
             switch traitCollection.userInterfaceStyle {
             case .dark:

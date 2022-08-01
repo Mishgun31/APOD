@@ -36,6 +36,11 @@ class ImageScrollView: UIScrollView {
         addSubview(imageZoomView)
         configureFor(imageSize: image.size)
     }
+}
+
+// MARK: - Handle image
+
+extension ImageScrollView {
     
     @objc private func handleZoomingTap(sender: UITapGestureRecognizer) {
         let location = sender.location(in: sender.view)
